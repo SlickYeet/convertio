@@ -29,9 +29,6 @@ importers:
       '@t3-oss/env-nextjs':
         specifier: ^0.12.0
         version: 0.12.0(typescript@5.8.3)(zod@3.25.67)
-      chrome-aws-lambda:
-        specifier: ^10.1.0
-        version: 10.1.0(puppeteer-core@24.10.2)
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -1134,12 +1131,6 @@ packages:
     resolution: {integrity: sha512-+IxzY9BZOQd/XuYPRmrvEVjF/nqj5kgT4kEq7VofrDoM1MxoRjEWkrCC3EtLi59TVawxTAn+orJwFQcrqEN1+g==}
     engines: {node: '>=18'}
 
-  chrome-aws-lambda@10.1.0:
-    resolution: {integrity: sha512-NZQVf+J4kqG4sVhRm3WNmOfzY0OtTSm+S8rg77pwePa9RCYHzhnzRs8YvNI6L9tALIW6RpmefWiPURt3vURXcw==}
-    engines: {node: '>= 10.16'}
-    peerDependencies:
-      puppeteer-core: ^10.1.0
-
   chromium-bidi@5.1.0:
     resolution: {integrity: sha512-9MSRhWRVoRPDG0TgzkHrshFSJJNZzfY5UFqUMuksg7zL1yoZIZ3jLB0YAgHclbiAxPI86pBnwDX1tbzoiV8aFw==}
     peerDependencies:
@@ -1783,13 +1774,6 @@ packages:
 
   keyv@4.5.4:
     resolution: {integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==}
-
-  lambdafs@2.1.1:
-    resolution: {integrity: sha512-x5k8JcoJWkWLvCVBzrl4pzvkEHSgSBqFjg3Dpsc4AcTMq7oUMym4cL/gRTZ6VM4mUMY+M0dIbQ+V1c1tsqqanQ==}
-    engines: {node: '>= 10.16'}
-    hasBin: true
-    bundledDependencies:
-      - tar-fs
 
   language-subtag-registry@0.3.23:
     resolution: {integrity: sha512-0K65Lea881pHotoGEa5gDlMxt3pctLi2RplBb7Ezh4rRdLEOtgi7n4EwK9lamnUCkKBqaeKRVebTq6BAxSkpXQ==}
@@ -3500,11 +3484,6 @@ snapshots:
 
   chownr@3.0.0: {}
 
-  chrome-aws-lambda@10.1.0(puppeteer-core@24.10.2):
-    dependencies:
-      lambdafs: 2.1.1
-      puppeteer-core: 24.10.2
-
   chromium-bidi@5.1.0(devtools-protocol@0.0.1452169):
     dependencies:
       devtools-protocol: 0.0.1452169
@@ -4311,8 +4290,6 @@ snapshots:
   keyv@4.5.4:
     dependencies:
       json-buffer: 3.0.1
-
-  lambdafs@2.1.1: {}
 
   language-subtag-registry@0.3.23: {}
 
