@@ -1,7 +1,7 @@
 "use client"
 
 import { AlertCircle, CheckCircle, FileText } from "lucide-react"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 import { FileUpload } from "@/components/converter-form/file-upload"
 import { MarkdownEditor } from "@/components/converter-form/markdown-editor"
