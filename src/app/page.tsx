@@ -1,4 +1,5 @@
 import { ConverterForm } from "@/components/converter-form"
+import { Credits } from "@/components/credits"
 import { Badge } from "@/components/ui/badge"
 
 export default function HomePage() {
@@ -21,19 +22,7 @@ export default function HomePage() {
           <ConverterForm />
         </div>
 
-        <div className="text-muted-foreground mt-12 text-center text-sm lg:mt-18">
-          <p>
-            Made with ❤️ by{" "}
-            <a
-              href="https://lasse.famlam.ca"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sky-600 hover:underline dark:text-sky-400"
-            >
-              Lasse
-            </a>
-          </p>
-        </div>
+        <Credits />
       </div>
     </div>
   )
