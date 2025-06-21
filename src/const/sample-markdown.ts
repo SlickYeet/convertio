@@ -25,10 +25,10 @@ function convertToPDF(markdown) {
 
 | Feature | Supported |
 |---------|-----------|
-| Headers | ✅ |
-| Lists | ✅ |
-| Code | ✅ |
-| Tables | ✅ |
+| Headers |     ✅    |
+| Lists   |     ✅    |
+| Code    |     ✅    |
+| Tables  |     ✅    |
 
 > This is a blockquote example. Perfect for highlighting important information!
 

@@ -1,6 +1,7 @@
+import chromium from "@sparticuz/chromium"
 import { marked } from "marked"
 import { NextResponse, type NextRequest } from "next/server"
-import puppeteer from "puppeteer"
+import puppeteer from "puppeteer-core"
 
 export async function POST(req: NextRequest) {
   try {
@@ -120,9 +121,12 @@ export async function POST(req: NextRequest) {
     `
 
     const browser = await puppeteer.launch({
-      headless: true,
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
-      executablePath: puppeteer.executablePath(),
+      args: [...chromium.args, "--hide-scrollbars", "--disable-web-security"],
+      // @ts-expect-error - @sparticuz/chromium has no types
+      defaultViewport: chromium.defaultViewport,
+      executablePath: await chromium.executablePath(),
+      // @ts-expect-error - @sparticuz/chromium has no types
+      headless: chromium.headless,
     })
     const page = await browser.newPage()
 
