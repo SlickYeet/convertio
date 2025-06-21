@@ -1,0 +1,97 @@
+import { CheckCircle, Download, FileText } from "lucide-react"
+import { toast } from "sonner"
+
+import { Button } from "@/components/ui/button"
+import { Separator } from "@/components/ui/separator"
+import { downloadFile } from "@/lib/file"
+
+interface OutputProps {
+  markdown: string
+  isConverted: boolean
+  pdfBlob: Blob | null
+}
+
+export function Output(props: OutputProps) {
+  const { markdown, isConverted, pdfBlob } = props
+
+  function downloadPDF() {
+    if (!pdfBlob) {
+      toast.error("Error", {
+        description: "No PDF available for download. Please convert first.",
+      })
+      return
+    }
+    const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, "-")
+    downloadFile(pdfBlob, `markdown-document-${timestamp}.pdf`)
+  }
+
+  function downloadMarkdown() {
+    if (!markdown.trim()) {
+      toast.error("Error", {
+        description: "No markdown content available for download.",
+      })
+      return
+    }
+    const blob = new Blob([markdown], { type: "text/markdown" })
+    downloadFile(blob, "document.md")
+  }
+
+  return (
+    <>
+      {isConverted ? (
+        <div className="space-y-4">
+          <div className="rounded-lg border border-green-200 bg-green-50 p-4">
+            <div className="mb-2 flex items-center gap-2">
+              <CheckCircle className="h-5 w-5 text-green-600" />
+              <span className="font-medium text-green-800">
+                Conversion Successful!
+              </span>
+            </div>
+            <p className="text-sm text-green-700">
+              Your markdown has been converted to PDF format.
+            </p>
+          </div>
+
+          <Separator />
+
+          <div className="space-y-3">
+            <h4 className="font-medium">Download Options</h4>
+
+            <div className="grid gap-2">
+              <Button
+                disabled={!pdfBlob}
+                onClick={downloadPDF}
+                className="justify-start"
+                aria-label="Download PDF"
+              >
+                <Download className="mr-2 size-4" />
+                Download PDF
+              </Button>
+
+              <Button
+                onClick={downloadMarkdown}
+                variant="outline"
+                className="justify-start"
+                aria-label="Download Markdown"
+              >
+                <Download className="mr-2 size-4" />
+                Download Markdown
+              </Button>
+            </div>
+
+            {pdfBlob && (
+              <div className="text-muted-foreground text-xs">
+                PDF size: {(pdfBlob.size / 1024).toFixed(1)} KB
+              </div>
+            )}
+          </div>
+        </div>
+      ) : (
+        <div className="text-muted-foreground py-20 text-center">
+          <FileText className="mx-auto mb-4 size-12 opacity-50" />
+          <p>Convert your markdown to see output options</p>
+        </div>
+      )}
+    </>
+  )
+}
