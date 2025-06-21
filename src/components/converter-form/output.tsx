@@ -41,7 +41,7 @@ export function Output(props: OutputProps) {
     <ScrollArea className="h-full">
       {isConverted ? (
         <div className="space-y-4">
-          <div className="rounded-lg border border-emerald-200 bg-emerald-100 p-4 dark:border-emerald-800 dark:bg-emerald-900">
+          <div className="rounded-lg border border-emerald-200 bg-emerald-100/40 p-4 dark:border-emerald-800 dark:bg-emerald-900/25">
             <div className="mb-2 flex items-center gap-2">
               <CheckCircle className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
               <span className="font-medium text-emerald-800 dark:text-emerald-200">
