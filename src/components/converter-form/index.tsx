@@ -21,18 +21,13 @@ import { SAMPLE_MARKDOWN } from "@/const/sample-markdown"
 export function ConverterForm() {
   const [markdown, setMarkdown] = useState<string>(SAMPLE_MARKDOWN)
   const [isConverted, setIsConverted] = useState<boolean>(false)
-
   const [error, setError] = useState<string | null>(null)
   const [pdfBlob, setPdfBlob] = useState<Blob | null>(null)
   const [activeTab, setActiveTab] = useState<string>("preview")
 
-  useEffect(() => {
-    setActiveTab(isConverted ? "output" : "preview")
-  }, [isConverted])
-
   return (
     <>
-      <Card className="h-fit">
+      <Card className="h-full max-h-[calc(100vh-16rem)]">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <FileText className="size-5" />
@@ -63,11 +58,12 @@ export function ConverterForm() {
             setIsConverted={setIsConverted}
             setError={setError}
             setPdfBlob={setPdfBlob}
+            setActiveTab={setActiveTab}
           />
         </CardContent>
       </Card>
 
-      <Card className="h-fit">
+      <Card className="h-full max-h-[calc(100vh-16rem)]">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             {isConverted ? (

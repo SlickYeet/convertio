@@ -14,10 +14,18 @@ interface MarkdownEditorProps {
   setIsConverted: (isConverted: boolean) => void
   setError: (error: string | null) => void
   setPdfBlob: (pdfBlob: Blob | null) => void
+  setActiveTab: (tab: string) => void
 }
 
 export function MarkdownEditor(props: MarkdownEditorProps) {
-  const { markdown, setMarkdown, setIsConverted, setError, setPdfBlob } = props
+  const {
+    markdown,
+    setMarkdown,
+    setIsConverted,
+    setError,
+    setPdfBlob,
+    setActiveTab,
+  } = props
 
   const [isConverting, setIsConverting] = useState<boolean>(false)
   const [isCoping, setIsCoping] = useState<boolean>(false)
@@ -34,14 +42,13 @@ export function MarkdownEditor(props: MarkdownEditorProps) {
     setIsConverting(true)
     setError(null)
     setPdfBlob(null)
+    setActiveTab("preview")
 
     try {
       const pdfBlob = await convertMarkdownToPDF(markdown)
       setPdfBlob(pdfBlob)
       setIsConverted(true)
-      toast.success("Conversion complete", {
-        description: "Your markdown has been converted to PDF.",
-      })
+      setActiveTab("output")
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : "An unexpected error occurred"
@@ -112,7 +119,7 @@ export function MarkdownEditor(props: MarkdownEditorProps) {
         >
           {isCopied ? (
             <>
-              <CopyCheck className="size-4 text-emerald-600" />
+              <CopyCheck className="size-4 text-emerald-600 dark:text-emerald-400" />
               <span className="sr-only">Copied!</span>
             </>
           ) : (

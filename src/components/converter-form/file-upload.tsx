@@ -72,6 +72,7 @@ export function FileUpload(props: FileUploadProps) {
       onDrop={handleDrop}
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
+      onClick={() => document.getElementById("file-upload")?.click()}
       className={cn(
         "rounded-lg border-2 border-dashed p-6 text-center transition-colors",
         isDragOver

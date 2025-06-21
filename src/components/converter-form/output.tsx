@@ -2,6 +2,7 @@ import { CheckCircle, Download, FileText } from "lucide-react"
 import { toast } from "sonner"
 
 import { Button } from "@/components/ui/button"
+import { ScrollArea } from "@/components/ui/scroll-area"
 import { Separator } from "@/components/ui/separator"
 import { downloadFile } from "@/lib/file"
 
@@ -37,17 +38,17 @@ export function Output(props: OutputProps) {
   }
 
   return (
-    <>
+    <ScrollArea className="h-full">
       {isConverted ? (
         <div className="space-y-4">
-          <div className="rounded-lg border border-green-200 bg-green-50 p-4">
+          <div className="rounded-lg border border-emerald-200 bg-emerald-100 p-4 dark:border-emerald-800 dark:bg-emerald-900">
             <div className="mb-2 flex items-center gap-2">
-              <CheckCircle className="h-5 w-5 text-green-600" />
-              <span className="font-medium text-green-800">
+              <CheckCircle className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+              <span className="font-medium text-emerald-800 dark:text-emerald-200">
                 Conversion Successful!
               </span>
             </div>
-            <p className="text-sm text-green-700">
+            <p className="text-sm text-emerald-700 dark:text-emerald-300">
               Your markdown has been converted to PDF format.
             </p>
           </div>
@@ -92,6 +93,6 @@ export function Output(props: OutputProps) {
           <p>Convert your markdown to see output options</p>
         </div>
       )}
-    </>
+    </ScrollArea>
   )
 }
