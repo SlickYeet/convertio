@@ -1,5 +1,5 @@
 export async function convertMarkdownToPDF(markdown: string): Promise<Blob> {
-  const response = await fetch("/api/convert/pdf", {
+  const response = await fetch("/api/convert/md-to-pdf", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

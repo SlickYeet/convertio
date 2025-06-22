@@ -29,7 +29,6 @@ export const NAVIGATION: NavigationListProps[] = [
         href: "/html-to-pdf",
         description: "Convert HTML files to PDF documents.",
         icon: Code,
-        comingSoon: true,
       },
       {
         label: "Text to PDF",
