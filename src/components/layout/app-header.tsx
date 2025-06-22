@@ -26,8 +26,6 @@ import { NAVIGATION, type NavigationItem } from "@/const/navigation"
 import { cn } from "@/lib/utils"
 
 export function AppHeader() {
-  const pathname = usePathname()
-
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false)
 
   return (
