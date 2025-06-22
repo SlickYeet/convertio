@@ -1,14 +1,13 @@
-import { ArrowRight, BadgeCheck, ThumbsUp, Zap } from "lucide-react"
-import Link from "next/link"
+import { BadgeCheck, ThumbsUp, Zap } from "lucide-react"
 
+import ButtonWithAnimatedArrow from "@/components/button-with-animated-arrow"
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
 
 export default function Hero() {
   return (
-    <section className="container py-16 md:py-24">
+    <section className="py-16 md:py-24">
       <div className="mx-auto max-w-4xl text-center">
-        <div className="mb-2 flex justify-center gap-2">
+        <div className="mb-2 flex flex-col items-center justify-center gap-4 md:flex-row md:gap-2">
           <Badge variant="secondary">
             <Zap className="mr-1 size-3" />
             Fast Conversion
@@ -32,12 +31,7 @@ export default function Hero() {
           quality results. Fast, secure, and completely free to use.
         </p>
 
-        <Button size="lg" className="px-8 text-lg" asChild>
-          <Link href="/md-to-pdf">
-            Get Started Free
-            <ArrowRight className="ml-2 size-4" />
-          </Link>
-        </Button>
+        <ButtonWithAnimatedArrow label="Get Started Free" href="/md-to-pdf" />
       </div>
     </section>
   )

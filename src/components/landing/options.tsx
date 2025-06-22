@@ -1,8 +1,7 @@
-import { ArrowRight, FileText } from "lucide-react"
-import Link from "next/link"
+import { FileText } from "lucide-react"
 
+import ButtonWithAnimatedArrow from "@/components/button-with-animated-arrow"
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
@@ -15,7 +14,7 @@ import { cn } from "@/lib/utils"
 
 export default function Options() {
   return (
-    <section className="container py-16">
+    <section className="py-16">
       <div className="mb-12 text-center">
         <h2 className="mb-4 text-3xl font-bold md:text-4xl">
           Choose Your Conversion Tool
@@ -76,27 +75,19 @@ export default function Options() {
                   </CardHeader>
 
                   <CardContent className="pt-0">
-                    <Button
+                    <ButtonWithAnimatedArrow
                       disabled={comingSoon}
+                      label="Start Converting"
+                      href={href}
+                      comingSoon={comingSoon}
+                      size="default"
                       variant={comingSoon ? "secondary" : "default"}
                       className={cn(
-                        "w-full",
+                        "w-full text-sm",
                         comingSoon &&
                           "pointer-events-none cursor-default opacity-50",
                       )}
-                      asChild
-                    >
-                      {comingSoon ? (
-                        <span>Coming Soon</span>
-                      ) : (
-                        <Link href={href} className="group/link">
-                          <span className="mr-[-23px] transition-all group-hover/link:mr-0">
-                            Start Converting
-                          </span>
-                          <ArrowRight className="size-4 scale-0 transition-transform group-hover/link:scale-100" />
-                        </Link>
-                      )}
-                    </Button>
+                    />
                   </CardContent>
                 </Card>
               )

@@ -1,12 +1,9 @@
-import { ArrowRight } from "lucide-react"
-import Link from "next/link"
-
-import { Button } from "@/components/ui/button"
+import ButtonWithAnimatedArrow from "@/components/button-with-animated-arrow"
 
 export default function CTA() {
   return (
-    <section className="container py-16">
-      <div className="bg-primary rounded-2xl p-8 text-center text-white md:p-12">
+    <section className="py-16">
+      <div className="bg-primary flex flex-col items-center rounded-2xl p-8 text-center text-white md:p-12">
         <h2 className="mb-4 text-3xl font-bold md:text-4xl">
           Ready to Convert Your Documents?
         </h2>
@@ -15,12 +12,11 @@ export default function CTA() {
           hassle, just fast and reliable conversion.
         </p>
 
-        <Button size="lg" variant="secondary" className="px-8 text-lg" asChild>
-          <Link href="/markdown-to-pdf">
-            Start Converting Now
-            <ArrowRight className="ml-2 size-5" />
-          </Link>
-        </Button>
+        <ButtonWithAnimatedArrow
+          label="Start Converting Now"
+          href="/markdown-to-pdf"
+          variant="secondary"
+        />
       </div>
     </section>
   )

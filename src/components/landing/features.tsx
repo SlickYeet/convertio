@@ -2,13 +2,13 @@ import { Download, Shield, Zap } from "lucide-react"
 
 export default function Features() {
   return (
-    <section className="container py-16">
+    <section className="py-16">
       <div className="mb-12 text-center">
         <h2 className="mb-4 text-3xl font-bold md:text-4xl">
-          Why We Are the Best
+          Why We Are The Best
         </h2>
         <p className="text-muted-foreground mx-auto max-w-2xl text-lg">
-          Built with modern technology to provide the best document conversion
+          Built with modern technologies to provide the best document conversion
           experience.
         </p>
       </div>

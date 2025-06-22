@@ -30,7 +30,7 @@ export function AppHeader() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false)
 
   return (
-    <header className="sticky top-0 z-50 w-full backdrop-blur">
+    <header className="sticky top-0 z-50 w-full border-b backdrop-blur">
       <div className="flex h-16 items-center gap-x-4">
         <Link href="/" className="flex items-center space-x-2">
           <div className="bg-primary text-primary-foreground flex size-8 items-center justify-center rounded-lg">
