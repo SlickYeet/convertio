@@ -3,7 +3,7 @@ import { renderMarkdown } from "@/lib/markdown"
 
 export function Preview({ markdown }: { markdown: string }) {
   return (
-    <ScrollArea className="h-[calc(100vh-28rem)] rounded-lg border">
+    <ScrollArea className="rounded-lg border md:h-[calc(100vh-28rem)]">
       <div className="p-4">
         {markdown.trim() ? (
           <div
