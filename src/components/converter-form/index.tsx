@@ -27,7 +27,7 @@ export function ConverterForm() {
 
   return (
     <>
-      <Card className="h-full min-h-[calc(100vh-16rem)]">
+      <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <FileText className="size-5" />
@@ -63,7 +63,7 @@ export function ConverterForm() {
         </CardContent>
       </Card>
 
-      <Card className="h-full min-h-[calc(100vh-16rem)]">
+      <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             {isConverted ? (
