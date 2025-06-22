@@ -8,7 +8,7 @@ export default function Hero() {
   return (
     <section className="container py-16 md:py-24">
       <div className="mx-auto max-w-4xl text-center">
-        <div className="lex justify-center gap-2">
+        <div className="mb-2 flex justify-center gap-2">
           <Badge variant="secondary">
             <Zap className="mr-1 size-3" />
             Fast Conversion
@@ -22,6 +22,7 @@ export default function Hero() {
             Free to Use
           </Badge>
         </div>
+
         <h1 className="mb-6 text-4xl font-bold md:text-6xl">
           Document Conversion
           <span className="text-primary"> Made Simple</span>
