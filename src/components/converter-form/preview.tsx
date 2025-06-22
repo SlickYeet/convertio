@@ -1,20 +1,32 @@
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { sanitizeHtml } from "@/lib/full-html"
 import { renderMarkdown } from "@/lib/markdown"
 
-export function Preview({ markdown }: { markdown: string }) {
+export function Preview({
+  input,
+  fileType,
+}: {
+  input: string
+  fileType: string
+}) {
+  const sanitizedHtml = sanitizeHtml(input)
+
   return (
     <ScrollArea className="rounded-lg border md:h-[calc(100vh-28rem)]">
       <div className="p-4">
-        {markdown.trim() ? (
+        {input.trim() ? (
           <div
             className="prose prose-sm max-w-none"
             dangerouslySetInnerHTML={{
-              __html: renderMarkdown(markdown),
+              __html:
+                fileType === "md"
+                  ? renderMarkdown(sanitizedHtml)
+                  : sanitizedHtml,
             }}
           />
         ) : (
           <p className="text-muted-foreground py-20 text-center">
-            Your markdown preview will appear here
+            Your preview will appear here
           </p>
         )}
       </div>

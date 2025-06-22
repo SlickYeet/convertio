@@ -3,8 +3,8 @@
 import { AlertCircle, CheckCircle, FileText } from "lucide-react"
 import { useState } from "react"
 
+import { Editor } from "@/components/converter-form/editor"
 import { FileUpload } from "@/components/converter-form/file-upload"
-import { MarkdownEditor } from "@/components/converter-form/markdown-editor"
 import { Output } from "@/components/converter-form/output"
 import { Preview } from "@/components/converter-form/preview"
 import { Alert, AlertDescription } from "@/components/ui/alert"
@@ -16,10 +16,13 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { SAMPLE_MARKDOWN } from "@/constants/sample-markdown"
+import { sampleContent } from "@/constants/sample"
+import { formatFileType } from "@/lib/utils"
 
-export function ConverterForm() {
-  const [markdown, setMarkdown] = useState<string>(SAMPLE_MARKDOWN)
+export function ConverterForm({ fileType }: { fileType: string }) {
+  const sampleInput = sampleContent(fileType)
+
+  const [input, setInput] = useState<string>(sampleInput)
   const [isConverted, setIsConverted] = useState<boolean>(false)
   const [error, setError] = useState<string | null>(null)
   const [pdfBlob, setPdfBlob] = useState<Blob | null>(null)
@@ -31,18 +34,19 @@ export function ConverterForm() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <FileText className="size-5" />
-            Input Markdown
+            Input {formatFileType(fileType)}
           </CardTitle>
           <CardDescription>
-            Paste your markdown content or upload a .md file
+            Paste your {fileType} content or upload a .{fileType} file
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <FileUpload
-            setMarkdown={setMarkdown}
+            setInput={setInput}
             setIsConverted={setIsConverted}
             setError={setError}
             setPdfBlob={setPdfBlob}
+            fileType={fileType}
           />
 
           {error && (
@@ -52,9 +56,9 @@ export function ConverterForm() {
             </Alert>
           )}
 
-          <MarkdownEditor
-            markdown={markdown}
-            setMarkdown={setMarkdown}
+          <Editor
+            input={input}
+            setInput={setInput}
             setIsConverted={setIsConverted}
             setError={setError}
             setPdfBlob={setPdfBlob}
@@ -81,7 +85,7 @@ export function ConverterForm() {
           <CardDescription>
             {isConverted
               ? "Your PDF is ready for download"
-              : "Live preview of your markdown content"}
+              : `Live preview of your ${fileType} content`}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -98,12 +102,12 @@ export function ConverterForm() {
             </TabsList>
 
             <TabsContent value="preview" className="mt-4">
-              <Preview markdown={markdown} />
+              <Preview input={input} fileType={fileType} />
             </TabsContent>
 
             <TabsContent value="output" className="mt-4">
               <Output
-                markdown={markdown}
+                input={input}
                 isConverted={isConverted}
                 pdfBlob={pdfBlob}
               />

@@ -1,3 +1,55 @@
+export const sanitizeHtml = (htmlContent: string) => {
+  return htmlContent
+    .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, "")
+    .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, "")
+    .replace(/on\w+="[^"]*"/g, "")
+    .replace(/<[^>]+>/g, (match) => {
+      const allowedTags = [
+        "b",
+        "i",
+        "em",
+        "strong",
+        "u",
+        "a",
+        "p",
+        "br",
+        "ul",
+        "ol",
+        "li",
+        "blockquote",
+        "code",
+        "pre",
+        "h1",
+        "h2",
+        "h3",
+        "h4",
+        "h5",
+        "h6",
+        "table",
+        "thead",
+        "tbody",
+        "tr",
+        "th",
+        "td",
+        "img",
+        "hr",
+        "span",
+      ]
+
+      const tagMatch = match.match(/^<\/?([a-z0-9]+)\b/i)
+      if (tagMatch && allowedTags.includes(tagMatch[1].toLowerCase())) {
+        if (tagMatch[1].toLowerCase() === "a") {
+          return match.replace(/\s+(?!href=)[a-z-]+="[^"]*"/gi, "")
+        }
+        if (tagMatch[1].toLowerCase() === "img") {
+          return match.replace(/\s+(?!src=|alt=)[a-z-]+="[^"]*"/gi, "")
+        }
+        return match
+      }
+      return ""
+    })
+}
+
 export const html = (htmlContent: string) => `
       <!DOCTYPE html>
       <html lang="en">

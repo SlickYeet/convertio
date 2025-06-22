@@ -1,10 +1,18 @@
-export async function convertMarkdownToPDF(markdown: string): Promise<Blob> {
-  const response = await fetch("/api/convert/md-to-pdf", {
+export async function convert(
+  input: string,
+  inputType: string,
+  outputType: string,
+): Promise<Blob> {
+  const response = await fetch("/api/convert", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ markdown }),
+    body: JSON.stringify({
+      input,
+      inputType,
+      outputType,
+    }),
   })
 
   if (!response.ok) {

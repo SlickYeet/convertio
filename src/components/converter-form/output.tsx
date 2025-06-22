@@ -7,13 +7,13 @@ import { Separator } from "@/components/ui/separator"
 import { downloadFile } from "@/lib/file"
 
 interface OutputProps {
-  markdown: string
+  input: string
   isConverted: boolean
   pdfBlob: Blob | null
 }
 
 export function Output(props: OutputProps) {
-  const { markdown, isConverted, pdfBlob } = props
+  const { input, isConverted, pdfBlob } = props
 
   function downloadPDF() {
     if (!pdfBlob) {
@@ -23,17 +23,17 @@ export function Output(props: OutputProps) {
       return
     }
     const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, "-")
-    downloadFile(pdfBlob, `markdown-document-${timestamp}.pdf`)
+    downloadFile(pdfBlob, `document-${timestamp}.pdf`)
   }
 
-  function downloadMarkdown() {
-    if (!markdown.trim()) {
+  function downloadOriginal() {
+    if (!input.trim()) {
       toast.error("Error", {
-        description: "No markdown content available for download.",
+        description: "No content available for download.",
       })
       return
     }
-    const blob = new Blob([markdown], { type: "text/markdown" })
+    const blob = new Blob([input], { type: "text/markdown" })
     downloadFile(blob, "document.md")
   }
 
@@ -70,13 +70,13 @@ export function Output(props: OutputProps) {
               </Button>
 
               <Button
-                onClick={downloadMarkdown}
+                onClick={downloadOriginal}
                 variant="outline"
                 className="justify-start"
                 aria-label="Download Markdown"
               >
                 <Download className="mr-2 size-4" />
-                Download Markdown
+                Download Original Document
               </Button>
             </div>
 

@@ -1,40 +1,59 @@
 "use client"
 
 import { Copy, CopyCheck, FileText, Loader2 } from "lucide-react"
-import { useState } from "react"
+import { usePathname } from "next/navigation"
+import { useEffect, useState } from "react"
 import { toast } from "sonner"
 
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
-import { convertMarkdownToPDF } from "@/lib/conversion"
+import { convert } from "@/lib/conversion"
 
-interface MarkdownEditorProps {
-  markdown: string
-  setMarkdown: (markdown: string) => void
+interface EditorProps {
+  input: string
+  setInput: (input: string) => void
   setIsConverted: (isConverted: boolean) => void
   setError: (error: string | null) => void
   setPdfBlob: (pdfBlob: Blob | null) => void
   setActiveTab: (tab: string) => void
 }
 
-export function MarkdownEditor(props: MarkdownEditorProps) {
+export function Editor(props: EditorProps) {
+  const pathname = usePathname()
+
+  const [inputType, setInputType] = useState<string>("")
+  const [outputType, setOutputType] = useState<string>("")
+  const [isConverting, setIsConverting] = useState<boolean>(false)
+  const [isCoping, setIsCoping] = useState<boolean>(false)
+  const [isCopied, setIsCopied] = useState<boolean>(false)
+
   const {
-    markdown,
-    setMarkdown,
+    input,
+    setInput,
     setIsConverted,
     setError,
     setPdfBlob,
     setActiveTab,
   } = props
 
-  const [isConverting, setIsConverting] = useState<boolean>(false)
-  const [isCoping, setIsCoping] = useState<boolean>(false)
-  const [isCopied, setIsCopied] = useState<boolean>(false)
+  useEffect(() => {
+    if (pathname === "/html-to-pdf") {
+      setInputType("html")
+      setOutputType("pdf")
+    } else if (pathname === "/md-to-pdf") {
+      setInputType("markdown")
+      setOutputType("pdf")
+    } else {
+      setInputType("")
+      setOutputType("")
+      toast.error("Unsupported conversion type")
+    }
+  }, [pathname])
 
   async function handleConvert() {
-    if (!markdown.trim()) {
+    if (!input.trim()) {
       toast.error("Error", {
-        description: "Please enter some markdown content to convert.",
+        description: "Please enter content to convert.",
       })
       return
     }
@@ -45,7 +64,7 @@ export function MarkdownEditor(props: MarkdownEditorProps) {
     setActiveTab("preview")
 
     try {
-      const pdfBlob = await convertMarkdownToPDF(markdown)
+      const pdfBlob = await convert(input, inputType, outputType)
       setPdfBlob(pdfBlob)
       setIsConverted(true)
       setActiveTab("output")
@@ -64,7 +83,7 @@ export function MarkdownEditor(props: MarkdownEditorProps) {
     setIsCopied(false)
 
     try {
-      await navigator.clipboard.writeText(markdown)
+      await navigator.clipboard.writeText(input)
       setIsCopied(true)
     } catch (err) {
       console.error("Failed to copy to clipboard:", err)
@@ -82,21 +101,21 @@ export function MarkdownEditor(props: MarkdownEditorProps) {
   return (
     <>
       <Textarea
-        value={markdown}
+        value={input}
         onChange={(e) => {
-          setMarkdown(e.target.value)
+          setInput(e.target.value)
           setIsConverted(false)
           setError(null)
           setPdfBlob(null)
         }}
-        placeholder="Paste your markdown content here..."
+        placeholder="Paste your content here..."
         className="min-h-[400px] resize-y font-mono text-sm"
       />
 
       <div className="flex gap-2">
         <Button
           onClick={handleConvert}
-          disabled={!markdown.trim() || isConverting}
+          disabled={!input.trim() || isConverting}
           className="flex-1"
         >
           {isConverting ? (
@@ -112,7 +131,7 @@ export function MarkdownEditor(props: MarkdownEditorProps) {
           )}
         </Button>
         <Button
-          disabled={!markdown.trim() || isCoping || isCopied}
+          disabled={!input.trim() || isCoping || isCopied}
           onClick={copyToClipboard}
           size="icon"
           variant="outline"
@@ -125,7 +144,7 @@ export function MarkdownEditor(props: MarkdownEditorProps) {
           ) : (
             <>
               <Copy className="size-4" />
-              <span className="sr-only">Copy Markdown</span>
+              <span className="sr-only">Copy</span>
             </>
           )}
         </Button>

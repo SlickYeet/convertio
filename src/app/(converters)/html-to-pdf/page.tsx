@@ -1,7 +1,5 @@
+import { ConverterForm } from "@/components/converter-form"
+
 export default function HtmlToPdfPage() {
-  return (
-    <div>
-      <h1>HtmlToPdfPage</h1>
-    </div>
-  )
+  return <ConverterForm fileType="html" />
 }

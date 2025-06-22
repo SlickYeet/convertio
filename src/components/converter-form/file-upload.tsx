@@ -2,42 +2,41 @@
 
 import { FilePlus2, Upload } from "lucide-react"
 import { useCallback, useState } from "react"
-import { toast } from "sonner"
 
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
 interface FileUploadProps {
-  setMarkdown: (markdown: string) => void
+  setInput: (input: string) => void
   setIsConverted: (isConverted: boolean) => void
   setError: (error: string | null) => void
   setPdfBlob: (pdfBlob: Blob | null) => void
+  fileType: string
 }
 
 export function FileUpload(props: FileUploadProps) {
-  const { setMarkdown, setIsConverted, setError, setPdfBlob } = props
+  const { setInput, setIsConverted, setError, setPdfBlob, fileType } = props
 
   const [isDragOver, setIsDragOver] = useState<boolean>(false)
 
   const handleFileUpload = useCallback(
     (file: File) => {
-      if (file.type === "text/markdown" || file.name.endsWith(".md")) {
-        const reader = new FileReader()
-        reader.onload = (e) => {
-          const content = e.target?.result as string
-          setMarkdown(content)
-          setIsConverted(false)
-          setError(null)
-          setPdfBlob(null)
-        }
-        reader.readAsText(file)
-      } else {
-        toast.error("Invalid file type", {
-          description: "Please upload a .md.",
-        })
+      if (!file.name.endsWith(`.${fileType}`)) {
+        setError(`Please upload a valid .${fileType} file.`)
+        return
       }
+
+      const reader = new FileReader()
+      reader.onload = (e) => {
+        const content = e.target?.result as string
+        setInput(content)
+        setIsConverted(false)
+        setError(null)
+        setPdfBlob(null)
+      }
+      reader.readAsText(file)
     },
-    [setMarkdown, setIsConverted, setError, setPdfBlob],
+    [fileType, setInput, setIsConverted, setError, setPdfBlob],
   )
 
   const handleDrop = useCallback(
@@ -78,7 +77,7 @@ export function FileUpload(props: FileUploadProps) {
     >
       <Upload className="text-muted-foreground mx-auto mb-2 size-8" />
       <p className="text-muted-foreground mb-2 text-sm">
-        Drag and drop your .md file here, or
+        Drag and drop your .{fileType} file here, or
       </p>
 
       <Button
@@ -92,7 +91,7 @@ export function FileUpload(props: FileUploadProps) {
       <input
         id="file-upload"
         type="file"
-        accept=".md"
+        accept={`.${fileType}`}
         onChange={(e) => {
           const file = e.target.files?.[0]
           if (file) handleFileUpload(file)

@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server"
 
-import { html } from "@/lib/full-html"
-import { browser } from "@/lib/pupeteer"
+import { html, sanitizeHtml } from "@/lib/full-html"
+import { getBrowser } from "@/lib/pupeteer"
 
 export async function POST(req: NextRequest) {
   try {
@@ -19,8 +19,10 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    const fullHtml = html(htmlContent)
+    const sanitizedHtml = sanitizeHtml(htmlContent)
+    const fullHtml = html(sanitizedHtml)
 
+    const browser = await getBrowser()
     const page = await browser.newPage()
 
     await page.setContent(fullHtml, {
