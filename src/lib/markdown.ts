@@ -14,6 +14,20 @@ md.renderer.rules.heading_open = (tokens, idx) => {
   const className = `text-${size} font-semibold mb-${level === 1 ? 4 : 3} pb-${level === 1 ? 2 : 1}`
   return `<h${level} class="${className}">`
 }
+md.renderer.rules.link_open = (tokens, idx) => {
+  const token = tokens[idx]
+  const href = token.attrGet("href") || "#"
+  const title = token.attrGet("title")
+    ? ` title="${token.attrGet("title")}"`
+    : ""
+  return `<a href="${href}"${title} class="text-sky-600 dark:text-sky-400 underline hover:text-sky-600/80 dark:hover:text-sky-400/80 transition-colors" target="_blank" rel="noopener noreferrer">`
+}
+md.renderer.rules.image = (tokens, idx) => {
+  const token = tokens[idx]
+  const src = token.attrGet("src") || ""
+  const alt = token.content || ""
+  return `<img src="${src}" alt="${alt}" class="my-2 max-w-full h-auto rounded" />`
+}
 md.renderer.rules.fence = (tokens, idx) => {
   const token = tokens[idx]
   const lang = token.info ? token.info.trim() : ""
