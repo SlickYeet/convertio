@@ -1,56 +1,50 @@
-# Create TNT Stack
+# Markdown to PDF Converter
 
-This is a [TNT-Powered Stack](https://create.tntstack.org/) project bootstrapped
-with `create-tnt-stack`.
+An app that started because I needed a markdown to PDF converter. I thought to
+myself, "How hard can it be to make my own?" Well, here we are, with a simple
+tool that converts your markdown files into polished PDF documents.
 
-## Where do I go from here?
+## Is there more planned?
 
-You can treat this project just as you would a regular `create-next-app`
-project, but without needing to implement additional packages yourself. This
-means you can start scaffolding from our base template.
+Yes, infact now that the initial functionality is completed I am planning on
+adding more conversion options, making this app into a fully featured converter.
 
-To start developing simply run the following commands:
+## Features
 
-```bash
-cd your-project-name
+- Converts Markdown files to PDF with ease
+- Supports basic Markdown syntax (headings, lists, code blocks, etc.)
+- Simple user interface
 
-npm run dev
-# or
+## Getting Started
+
+1. Clone this repository.
+2. Install the required dependencies.
+3. Run the converter with your Markdown file as input.
+
+## Usage
+
+```sh
+# run the dev server
 pnpm dev
-# or
-yarn dev
-# or
-bun dev
+
+# build the app
+pnpm build
+
+# check for linting errors
+pnpm lint
+
+# format the the code
+pnpm format
+
+# perform a clean install of the dependencies
+pnpm clean
 ```
 
-## Learn More
+## Contributing
 
-To learn more about the [TNT Stack](https://create.tntstack.org/), take a look
-at our [documentation](https://create.tntstack.org/).
+Contributions are welcome! Feel free to open issues or submit pull requests to
+improve the converter.
 
-If you are not familiar with the different technologies used in this project,
-please refer to the respective docs.
+## License
 
-- [Next.js](https://nextjs.org)
-- [Payload CMS](https://payloadcms.com)
-- [Auth.js](https://authjs.dev/)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-
-You can check out the
-[create-tnt-stack GitHub repository](https://github.com/SlickYeet/create-tnt-stack)
-— your feedback and contributions are welcome!
-
-## How do I deploy this?
-
-> [!NOTE] Currently, we have a guide for deploying to
-> [Vercel](https://create.tntstack.org/deployment/vercel), with more deployment
-> options coming soon.
-
-Follow our deployment guides for more information
-
-- [Vercel](https://create.tntstack.org/deployment/vercel)
-- [Netlify](https://create.tntstack.org/deployment/netlify) — Coming soon
-- [Docker](https://create.tntstack.org/deployment/docker) — Coming soon
-- [Cloudflare](https://create.tntstack.org/deployment/cloudflare) — Coming soon
+This project is licensed under the MIT License.

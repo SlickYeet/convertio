@@ -8,6 +8,8 @@
     "dev": "next dev --turbopack",
     "lint": "next lint",
     "start": "next start",
+    "format": "prettier --write ./src/*",
+    "clean": "rm -rf .next node_modules pnpm-lock.yaml && pnpm install ",
     "shadcn": "pnpm dlx shadcn@latest"
   },
   "dependencies": {
