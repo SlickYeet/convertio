@@ -7,7 +7,7 @@ export function Footer() {
 
   return (
     <footer className="container border-t py-4">
-      <div className="text-muted-foreground flex items-center justify-between text-center">
+      <div className="text-muted-foreground flex flex-col items-center justify-between gap-y-4 text-center md:flex-row">
         <p>
           &copy; {currentYear}{" "}
           <Link
