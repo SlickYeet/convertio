@@ -23,7 +23,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import { NAVIGATION, type NavigationItem } from "@/const/navigation"
+import { NAVIGATION, type NavigationItem } from "@/constants/navigation"
 import { cn } from "@/lib/utils"
 
 export function AppHeader() {

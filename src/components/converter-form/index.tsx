@@ -16,7 +16,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { SAMPLE_MARKDOWN } from "@/const/sample-markdown"
+import { SAMPLE_MARKDOWN } from "@/constants/sample-markdown"
 
 export function ConverterForm() {
   const [markdown, setMarkdown] = useState<string>(SAMPLE_MARKDOWN)

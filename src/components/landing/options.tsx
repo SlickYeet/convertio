@@ -9,7 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { NAVIGATION } from "@/const/navigation"
+import { NAVIGATION } from "@/constants/navigation"
 import { cn } from "@/lib/utils"
 
 export default function Options() {
