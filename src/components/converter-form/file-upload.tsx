@@ -21,11 +21,7 @@ export function FileUpload(props: FileUploadProps) {
 
   const handleFileUpload = useCallback(
     (file: File) => {
-      if (
-        file.type === "text/markdown" ||
-        file.name.endsWith(".md") ||
-        file.type === "text/plain"
-      ) {
+      if (file.type === "text/markdown" || file.name.endsWith(".md")) {
         const reader = new FileReader()
         reader.onload = (e) => {
           const content = e.target?.result as string
@@ -37,7 +33,7 @@ export function FileUpload(props: FileUploadProps) {
         reader.readAsText(file)
       } else {
         toast.error("Invalid file type", {
-          description: "Please upload a .md or .txt file.",
+          description: "Please upload a .md.",
         })
       }
     },
@@ -96,7 +92,7 @@ export function FileUpload(props: FileUploadProps) {
       <input
         id="file-upload"
         type="file"
-        accept=".md,.txt"
+        accept=".md"
         onChange={(e) => {
           const file = e.target.files?.[0]
           if (file) handleFileUpload(file)

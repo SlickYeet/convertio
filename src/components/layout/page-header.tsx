@@ -1,5 +1,3 @@
-import { Badge } from "@/components/ui/badge"
-
 export function PageHeader() {
   return (
     <div className="mb-8 text-center">
@@ -7,11 +5,6 @@ export function PageHeader() {
       <p className="text-muted-foreground text-lg">
         Convert your markdown files to beautiful PDFs instantly
       </p>
-      <div className="mt-4 flex justify-center gap-2">
-        <Badge variant="secondary">Fast Conversion</Badge>
-        <Badge variant="secondary">High Quality</Badge>
-        <Badge variant="secondary">Free to Use</Badge>
-      </div>
     </div>
   )
 }

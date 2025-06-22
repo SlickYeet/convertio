@@ -2,7 +2,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 export function Credits() {
   return (
-    <div className="text-muted-foreground mt-8 flex items-center justify-center text-center text-sm md:mt-0">
+    <div className="text-muted-foreground flex items-center justify-center text-center text-sm md:mt-0">
       <p className="mr-1.5">Made with ❤️ by</p>
       <a
         href="https://lasse.famlam.ca"

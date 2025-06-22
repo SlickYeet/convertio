@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 
 import { AppHeader } from "@/components/layout/app-header"
-import { Credits } from "@/components/layout/credits"
+import { Footer } from "@/components/layout/footer"
 import { Providers } from "@/components/providers"
 import { cn } from "@/lib/utils"
 
@@ -39,7 +39,7 @@ export default function RootLayout({
               <AppHeader />
               <div className="flex min-h-[calc(100vh-4rem)] flex-col justify-between">
                 <main>{children}</main>
-                <Credits />
+                <Footer />
               </div>
             </div>
           </div>

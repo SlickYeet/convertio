@@ -5,6 +5,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState } from "react"
 
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
   NavigationMenu,
@@ -102,15 +103,15 @@ export function AppHeader() {
 function ListItem(props: NavigationItem) {
   const pathname = usePathname()
 
-  const { label, href, description, icon: Icon } = props
+  const { label, href, description, icon: Icon, comingSoon } = props
 
   const isActive = pathname === href
 
   return (
-    <li key={label}>
+    <li key={label} className="group/link relative">
       <NavigationMenuLink asChild>
         <Link
-          href={href}
+          href={comingSoon ? "" : href}
           className={cn(
             "hover:text-primary text-sm font-medium transition-colors",
             isActive && "text-primary",
@@ -129,6 +130,11 @@ function ListItem(props: NavigationItem) {
           </p>
         </Link>
       </NavigationMenuLink>
+      {comingSoon && (
+        <div className="bg-accent/50 absolute inset-0 flex items-center justify-center rounded-sm opacity-0 transition-opacity group-hover/link:opacity-100">
+          <Badge variant="secondary">Coming Soon</Badge>
+        </div>
+      )}
     </li>
   )
 }
