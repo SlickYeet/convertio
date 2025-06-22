@@ -85,7 +85,7 @@ export function ConverterForm({ fileType }: { fileType: string }) {
           <CardDescription>
             {isConverted
               ? "Your PDF is ready for download"
-              : `Live preview of your ${fileType} content`}
+              : `Live preview of your ${formatFileType(fileType).toLowerCase()} content`}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -110,6 +110,7 @@ export function ConverterForm({ fileType }: { fileType: string }) {
                 input={input}
                 isConverted={isConverted}
                 pdfBlob={pdfBlob}
+                fileType={fileType}
               />
             </TabsContent>
           </Tabs>

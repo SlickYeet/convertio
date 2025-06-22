@@ -5,15 +5,17 @@ import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Separator } from "@/components/ui/separator"
 import { downloadFile } from "@/lib/file"
+import { formatFileType } from "@/lib/utils"
 
 interface OutputProps {
   input: string
   isConverted: boolean
   pdfBlob: Blob | null
+  fileType: string
 }
 
 export function Output(props: OutputProps) {
-  const { input, isConverted, pdfBlob } = props
+  const { input, isConverted, pdfBlob, fileType } = props
 
   function downloadPDF() {
     if (!pdfBlob) {
@@ -33,8 +35,15 @@ export function Output(props: OutputProps) {
       })
       return
     }
-    const blob = new Blob([input], { type: "text/markdown" })
-    downloadFile(blob, "document.md")
+    const blob = new Blob([input], {
+      type:
+        fileType === "md"
+          ? "text/markdown"
+          : fileType === "html"
+            ? "text/html"
+            : "text/plain",
+    })
+    downloadFile(blob, `document.${fileType}`)
   }
 
   return (
@@ -49,7 +58,8 @@ export function Output(props: OutputProps) {
               </span>
             </div>
             <p className="text-sm text-emerald-700 dark:text-emerald-300">
-              Your markdown has been converted to PDF format.
+              Your {formatFileType(fileType).toLowerCase()} has been converted
+              to PDF format.
             </p>
           </div>
 
@@ -76,7 +86,7 @@ export function Output(props: OutputProps) {
                 aria-label="Download Markdown"
               >
                 <Download className="mr-2 size-4" />
-                Download Original Document
+                Download {formatFileType(fileType)} Document
               </Button>
             </div>
 
