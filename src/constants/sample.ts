@@ -21,7 +21,7 @@ This converter supports **all standard markdown features**:
 - Lists and numbered lists
 - Tables
 - Blockquotes
-- And much more!
+- And more!
 
 ### Code Example
 
