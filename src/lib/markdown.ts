@@ -32,7 +32,7 @@ md.renderer.rules.fence = (tokens, idx) => {
   const token = tokens[idx]
   const lang = token.info ? token.info.trim() : ""
   const code = token.content.trim()
-  return `<pre class="bg-muted p-4 rounded text-sm font-mono"><code class="language-${lang}">${code}</code></pre>`
+  return `<div class="@container"><pre class="bg-muted p-4 rounded text-sm font-mono overflow-x-auto"><code class="language-${lang}">${code}</code></pre></div>`
 }
 md.renderer.rules.code_inline = (tokens, idx) => {
   const token = tokens[idx]
