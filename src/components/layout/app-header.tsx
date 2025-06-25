@@ -5,6 +5,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState } from "react"
 
+import { Logo } from "@/components/logo"
 import {
   Accordion,
   AccordionContent,
@@ -22,6 +23,7 @@ import {
 } from "@/components/ui/navigation-menu"
 import {
   Sheet,
+  SheetClose,
   SheetContent,
   SheetDescription,
   SheetHeader,
@@ -37,12 +39,7 @@ export function AppHeader() {
   return (
     <header className="sticky top-0 z-50 w-full border-b backdrop-blur">
       <div className="flex h-16 items-center gap-x-4">
-        <Link href="/" className="flex items-center space-x-2">
-          <div className="bg-primary text-primary-foreground flex size-8 items-center justify-center rounded-lg">
-            <FileText className="size-4" />
-          </div>
-          <span className="text-xl font-bold">HHN Converter</span>
-        </Link>
+        <Logo />
 
         <NavigationMenu>
           <NavigationMenuList className="hidden md:flex">
@@ -78,10 +75,13 @@ export function AppHeader() {
           </SheetTrigger>
           <SheetContent
             side="top"
-            className="container min-h-screen pb-2 md:hidden"
+            showDefaultCloseButton={false}
+            className="supports-[backdrop-filter]:bg-background/90 bg-background/90 container min-h-screen px-2.5 pb-2 backdrop-blur md:hidden md:px-4"
           >
             <SheetHeader className="px-0">
-              <SheetTitle>HHN Converter</SheetTitle>
+              <SheetTitle>
+                <Logo />
+              </SheetTitle>
               <SheetDescription>
                 Easily convert your documents.
               </SheetDescription>
@@ -101,6 +101,16 @@ export function AppHeader() {
                 </AccordionItem>
               ))}
             </Accordion>
+
+            <SheetClose asChild>
+              <Button
+                size="icon"
+                variant="ghost"
+                className="absolute top-4 right-2"
+              >
+                <X className="size-5" />
+              </Button>
+            </SheetClose>
           </SheetContent>
         </Sheet>
       </div>
@@ -116,7 +126,7 @@ function ListItem(props: NavigationItem) {
   const isActive = pathname === href
 
   return (
-    <li key={label} className="group/link relative">
+    <li key={label} className="group relative">
       <Link
         href={comingSoon ? "" : href}
         className={cn(
@@ -139,7 +149,7 @@ function ListItem(props: NavigationItem) {
         </p>
       </Link>
       {comingSoon && (
-        <div className="bg-accent/50 absolute inset-0 flex items-center justify-center rounded-sm opacity-0 transition-opacity group-hover/link:opacity-100 group-has-[:focus]/link:opacity-100">
+        <div className="bg-accent/50 absolute inset-0 flex items-center justify-center rounded-sm opacity-0 transition-opacity group-focus-within:opacity-100 group-hover:opacity-100 group-active:opacity-100">
           <Badge variant="secondary">Coming Soon</Badge>
         </div>
       )}
