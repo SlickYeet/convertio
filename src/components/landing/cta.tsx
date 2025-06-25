@@ -14,7 +14,7 @@ export default function CTA() {
 
         <ButtonWithAnimatedArrow
           label="Start Converting Now"
-          href="/markdown-to-pdf"
+          href="/md-to-pdf"
           variant="secondary"
         />
       </div>
