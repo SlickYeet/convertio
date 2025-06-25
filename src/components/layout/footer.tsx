@@ -1,6 +1,7 @@
 import Link from "next/link"
 
 import { Credits } from "@/components/layout/credits"
+import { config } from "@/config"
 
 export function Footer() {
   const currentYear = new Date().getFullYear()
@@ -14,7 +15,7 @@ export function Footer() {
             href="/"
             className="hover:text-primary underline-offset-2 transition-colors hover:underline"
           >
-            HHN Converter
+            {config.appName}
           </Link>
           . All rights reserved.
         </p>
