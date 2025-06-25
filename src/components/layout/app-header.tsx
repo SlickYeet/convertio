@@ -5,13 +5,18 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState } from "react"
 
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu"
@@ -71,7 +76,10 @@ export function AppHeader() {
               )}
             </Button>
           </SheetTrigger>
-          <SheetContent side="top" className="container pb-2 md:hidden">
+          <SheetContent
+            side="top"
+            className="container min-h-screen pb-2 md:hidden"
+          >
             <SheetHeader className="px-0">
               <SheetTitle>HHN Converter</SheetTitle>
               <SheetDescription>
@@ -79,20 +87,20 @@ export function AppHeader() {
               </SheetDescription>
             </SheetHeader>
 
-            <NavigationMenu>
-              <NavigationMenuList className="grid grid-cols-2 items-start gap-y-2">
-                {NAVIGATION.map((list) => (
-                  <NavigationMenuItem key={list.label}>
-                    <h3 className="text-lg font-semibold">{list.label}</h3>
+            <Accordion type="single" collapsible className="w-full">
+              {NAVIGATION.map((list) => (
+                <AccordionItem key={list.label} value={list.label}>
+                  <AccordionTrigger>{list.label}</AccordionTrigger>
+                  <AccordionContent>
                     <ul className="space-y-2">
                       {list.items.map((item) => (
                         <ListItem key={item.label} {...item} />
                       ))}
                     </ul>
-                  </NavigationMenuItem>
-                ))}
-              </NavigationMenuList>
-            </NavigationMenu>
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
           </SheetContent>
         </Sheet>
       </div>
@@ -109,29 +117,29 @@ function ListItem(props: NavigationItem) {
 
   return (
     <li key={label} className="group/link relative">
-      <NavigationMenuLink asChild>
-        <Link
-          href={comingSoon ? "" : href}
-          className={cn(
-            "hover:text-primary text-sm font-medium transition-colors",
-            isActive && "text-primary",
+      <Link
+        href={comingSoon ? "" : href}
+        className={cn(
+          "hover:text-primary focus:text-primary hover:bg-accent focus:bg-accent flex flex-col gap-1 rounded-sm p-2 transition-all outline-none",
+          isActive && "text-primary",
+          comingSoon &&
+            "hover:bg-transparent hover:text-inherit focus:bg-transparent focus:text-inherit",
+        )}
+      >
+        <div className="flex items-center gap-x-2 text-sm leading-none font-medium">
+          {Icon ? (
+            <Icon className="size-4 text-inherit" />
+          ) : (
+            <FileText className="size-4 text-inherit" />
           )}
-        >
-          <div className="flex items-center gap-x-2 text-sm leading-none font-medium">
-            {Icon ? (
-              <Icon className="size-4 text-inherit" />
-            ) : (
-              <FileText className="size-4 text-inherit" />
-            )}
-            {label}
-          </div>
-          <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">
-            {description}
-          </p>
-        </Link>
-      </NavigationMenuLink>
+          {label}
+        </div>
+        <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">
+          {description}
+        </p>
+      </Link>
       {comingSoon && (
-        <div className="bg-accent/50 absolute inset-0 flex items-center justify-center rounded-sm opacity-0 transition-opacity group-hover/link:opacity-100">
+        <div className="bg-accent/50 absolute inset-0 flex items-center justify-center rounded-sm opacity-0 transition-opacity group-hover/link:opacity-100 group-has-[:focus]/link:opacity-100">
           <Badge variant="secondary">Coming Soon</Badge>
         </div>
       )}
