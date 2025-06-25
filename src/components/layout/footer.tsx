@@ -1,7 +1,7 @@
 import Link from "next/link"
 
 import { Credits } from "@/components/layout/credits"
-import { config } from "@/config"
+import { siteConfig } from "@/config"
 
 export function Footer() {
   const currentYear = new Date().getFullYear()
@@ -15,7 +15,7 @@ export function Footer() {
             href="/"
             className="hover:text-primary underline-offset-2 transition-colors hover:underline"
           >
-            {config.appName}
+            {siteConfig.appName}
           </Link>
           . All rights reserved.
         </p>

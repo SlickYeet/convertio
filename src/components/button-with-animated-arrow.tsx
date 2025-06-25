@@ -15,6 +15,8 @@ export default function ButtonWithAnimatedArrow(
 ) {
   const { label, href, comingSoon, size = "lg", variant, className } = props
 
+  const externalLink = href.startsWith("http") || href.startsWith("mailto")
+
   return (
     <Button
       size={size}
@@ -25,7 +27,11 @@ export default function ButtonWithAnimatedArrow(
       {comingSoon ? (
         <span>Coming Soon</span>
       ) : (
-        <Link href={href}>
+        <Link
+          href={href}
+          target={externalLink ? "_blank" : undefined}
+          rel={externalLink ? "noopener noreferrer" : undefined}
+        >
           <span className="mr-0 transition-all md:mr-[-23px] md:group-hover/btn:mr-0 md:group-focus/btn:mr-0">
             {label}
           </span>

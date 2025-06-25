@@ -1,7 +1,7 @@
 import { FileText } from "lucide-react"
 import Link from "next/link"
 
-import { config } from "@/config"
+import { siteConfig } from "@/config"
 import { cn } from "@/lib/utils"
 
 interface LogoProps {
@@ -21,7 +21,7 @@ export function Logo({ href = "/", className, iconClassName }: LogoProps) {
       >
         <FileText className="size-4" />
       </div>
-      <span className="text-xl font-bold">{config.appName}</span>
+      <span className="text-xl font-bold">{siteConfig.appName}</span>
     </Link>
   )
 }
