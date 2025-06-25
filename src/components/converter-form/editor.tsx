@@ -1,7 +1,7 @@
 "use client"
 
 import { Copy, CopyCheck, FileText, Loader2 } from "lucide-react"
-import { usePathname } from "next/navigation"
+import { useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import { toast } from "sonner"
 
@@ -19,7 +19,8 @@ interface EditorProps {
 }
 
 export function Editor(props: EditorProps) {
-  const pathname = usePathname()
+  const searchParams = useSearchParams()
+  const type = searchParams.get("type") || "md-to-pdf"
 
   const [inputType, setInputType] = useState<string>("")
   const [outputType, setOutputType] = useState<string>("")
@@ -37,10 +38,10 @@ export function Editor(props: EditorProps) {
   } = props
 
   useEffect(() => {
-    if (pathname === "/html-to-pdf") {
+    if (type === "html-to-pdf") {
       setInputType("html")
       setOutputType("pdf")
-    } else if (pathname === "/md-to-pdf") {
+    } else if (type === "md-to-pdf") {
       setInputType("markdown")
       setOutputType("pdf")
     } else {
@@ -48,7 +49,7 @@ export function Editor(props: EditorProps) {
       setOutputType("")
       toast.error("Unsupported conversion type")
     }
-  }, [pathname])
+  }, [type])
 
   async function handleConvert() {
     if (!input.trim()) {
