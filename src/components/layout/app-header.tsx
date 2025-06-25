@@ -49,7 +49,11 @@ export function AppHeader() {
                 <NavigationMenuContent>
                   <ul className="grid w-[400px] gap-2 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
                     {list.items.map((item) => (
-                      <ListItem key={item.label} {...item} />
+                      <ListItem
+                        key={item.label}
+                        {...item}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      />
                     ))}
                   </ul>
                 </NavigationMenuContent>
@@ -87,14 +91,24 @@ export function AppHeader() {
               </SheetDescription>
             </SheetHeader>
 
-            <Accordion type="single" collapsible className="w-full">
+            <Accordion
+              type="multiple"
+              defaultValue={["converters"]}
+              className="w-full"
+            >
               {NAVIGATION.map((list) => (
                 <AccordionItem key={list.label} value={list.label}>
-                  <AccordionTrigger>{list.label}</AccordionTrigger>
+                  <AccordionTrigger className="capitalize">
+                    {list.label}
+                  </AccordionTrigger>
                   <AccordionContent>
                     <ul className="space-y-2">
                       {list.items.map((item) => (
-                        <ListItem key={item.label} {...item} />
+                        <ListItem
+                          key={item.label}
+                          {...item}
+                          onClick={() => setIsMobileMenuOpen(false)}
+                        />
                       ))}
                     </ul>
                   </AccordionContent>
@@ -118,16 +132,21 @@ export function AppHeader() {
   )
 }
 
-function ListItem(props: NavigationItem) {
+interface ListItemProps extends NavigationItem {
+  onClick?: () => void
+}
+
+function ListItem(props: ListItemProps) {
   const pathname = usePathname()
 
-  const { label, href, description, icon: Icon, comingSoon } = props
+  const { label, href, description, icon: Icon, comingSoon, onClick } = props
 
   const isActive = pathname === href
 
   return (
     <li key={label} className="group relative">
       <Link
+        onClick={comingSoon ? undefined : onClick}
         href={comingSoon ? "" : href}
         className={cn(
           "hover:text-primary focus:text-primary hover:bg-accent focus:bg-accent flex flex-col gap-1 rounded-sm p-2 transition-all outline-none",
@@ -136,7 +155,7 @@ function ListItem(props: NavigationItem) {
             "hover:bg-transparent hover:text-inherit focus:bg-transparent focus:text-inherit",
         )}
       >
-        <div className="flex items-center gap-x-2 text-sm leading-none font-medium">
+        <div className="flex items-center gap-x-2 text-sm leading-none font-medium capitalize">
           {Icon ? (
             <Icon className="size-4 text-inherit" />
           ) : (

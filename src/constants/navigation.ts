@@ -16,7 +16,7 @@ type NavigationListProps = {
 
 export const NAVIGATION: NavigationListProps[] = [
   {
-    label: "Converters",
+    label: "converters",
     items: [
       {
         label: "Markdown to PDF",
