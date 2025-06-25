@@ -7,7 +7,7 @@ export default function Features() {
         <h2 className="mb-4 text-3xl font-bold md:text-4xl">
           Why We Are The Best
         </h2>
-        <p className="text-muted-foreground mx-auto max-w-2xl text-lg">
+        <p className="text-muted-foreground mx-auto max-w-2xl text-lg text-balance">
           Built with modern technologies to provide the best document conversion
           experience.
         </p>
@@ -19,7 +19,7 @@ export default function Features() {
             <Zap className="size-8" />
           </div>
           <h3 className="mb-2 text-xl font-semibold">Lightning Fast</h3>
-          <p className="text-muted-foreground">
+          <p className="text-muted-foreground text-balance">
             Convert your documents in seconds with our lightweight and efficient
             processing engine.
           </p>
@@ -30,7 +30,7 @@ export default function Features() {
             <Shield className="size-8" />
           </div>
           <h3 className="mb-2 text-xl font-semibold">Secure & Private</h3>
-          <p className="text-muted-foreground">
+          <p className="text-muted-foreground text-balance">
             Your documents are processed securely and never stored on our
             servers.
           </p>
@@ -41,7 +41,7 @@ export default function Features() {
             <Download className="size-8" />
           </div>
           <h3 className="mb-2 text-xl font-semibold">High Quality Output</h3>
-          <p className="text-muted-foreground">
+          <p className="text-muted-foreground text-balance">
             Professional-grade conversions with perfect formatting and styling.
           </p>
         </div>

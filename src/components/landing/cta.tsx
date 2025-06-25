@@ -8,7 +8,7 @@ export default function CTA() {
         <h2 className="mb-4 text-3xl font-bold md:text-4xl">
           We are open source and free to use!
         </h2>
-        <p className="text-primary-foreground mx-auto mb-8 max-w-2xl text-center text-xl opacity-90">
+        <p className="text-primary-foreground mx-auto mb-8 max-w-2xl text-center text-xl text-balance opacity-90">
           Convertio is an open-source project, help us by staring it on GitHub
           and contributing to its development. Your support means a lot to us!
         </p>

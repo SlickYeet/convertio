@@ -19,7 +19,7 @@ export default function Options() {
         <h2 className="mb-4 text-3xl font-bold md:text-4xl">
           Choose Your Conversion Tool
         </h2>
-        <p className="text-muted-foreground mx-auto max-w-2xl text-lg">
+        <p className="text-muted-foreground mx-auto max-w-2xl text-lg text-balance">
           Select from our range of conversion tools, each optimized for specific
           document types and use cases.
         </p>
