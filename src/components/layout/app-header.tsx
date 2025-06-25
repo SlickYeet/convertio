@@ -2,7 +2,7 @@
 
 import { FileText, Menu, X } from "lucide-react"
 import Link from "next/link"
-import { usePathname, useSearchParams } from "next/navigation"
+import { useSearchParams } from "next/navigation"
 import { useState } from "react"
 
 import { Logo } from "@/components/logo"
@@ -34,11 +34,7 @@ import { CONFIG_LIST, type ConfigItem } from "@/constants/conversion"
 import { cn } from "@/lib/utils"
 
 export function AppHeader() {
-  const pathname = usePathname()
-
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false)
-
-  const isConvertPage = pathname === "/convert"
 
   return (
     <header className="sticky top-0 z-50 w-full border-b backdrop-blur">
@@ -149,12 +145,13 @@ function ListItem(props: ListItemProps) {
   const { label, href, description, icon: Icon, comingSoon, onClick } = props
 
   const isActive = type === href
+  const isDev = process.env.NODE_ENV === "development"
 
   return (
     <li key={label} className="group relative">
       <Link
         onClick={comingSoon ? undefined : onClick}
-        href={comingSoon ? "" : `/convert?type=${href}`}
+        href={comingSoon ? "" : isDev ? `/convert?type=${href}` : `/${href}`}
         className={cn(
           "hover:text-primary focus:text-primary hover:bg-accent focus:bg-accent flex flex-col gap-1 rounded-sm p-2 transition-all outline-none",
           isActive && "text-primary",
