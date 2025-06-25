@@ -13,7 +13,7 @@ export function RedirectToDefaultConverter() {
     if (!searchParams.has("type")) {
       router.replace(`/convert?type=${type}`)
     }
-  }, [])
+  }, [searchParams, router, type])
 
   return null
 }

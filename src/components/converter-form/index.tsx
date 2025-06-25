@@ -1,7 +1,6 @@
 "use client"
 
 import { AlertCircle, CheckCircle, FileText } from "lucide-react"
-import { useSearchParams } from "next/navigation"
 import { useState } from "react"
 
 import { Editor } from "@/components/converter-form/editor"
@@ -21,9 +20,6 @@ import { sampleContent } from "@/constants/sample"
 import { formatFileType } from "@/lib/utils"
 
 export function ConverterForm({ fileType }: { fileType: string }) {
-  const searchParams = useSearchParams()
-  const type = searchParams.get("type") || fileType
-
   const sampleInput = sampleContent(fileType)
 
   const [input, setInput] = useState<string>(sampleInput)
