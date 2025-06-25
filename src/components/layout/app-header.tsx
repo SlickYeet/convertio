@@ -83,7 +83,7 @@ export function AppHeader() {
             className="supports-[backdrop-filter]:bg-background/90 bg-background/90 container min-h-screen px-2.5 pb-2 backdrop-blur md:hidden md:px-4"
           >
             <SheetHeader className="px-0">
-              <SheetTitle>
+              <SheetTitle onClick={() => setIsMobileMenuOpen(false)}>
                 <Logo />
               </SheetTitle>
               <SheetDescription>
