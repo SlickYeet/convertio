@@ -45,7 +45,9 @@ export function AppHeader() {
           <NavigationMenuList className="hidden md:flex">
             {NAVIGATION.map((list) => (
               <NavigationMenuItem key={list.label}>
-                <NavigationMenuTrigger>{list.label}</NavigationMenuTrigger>
+                <NavigationMenuTrigger className="capitalize">
+                  {list.label}
+                </NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <ul className="grid w-[400px] gap-2 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
                     {list.items.map((item) => (
