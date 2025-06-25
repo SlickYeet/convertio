@@ -24,14 +24,15 @@ export default function Hero() {
 
         <h1 className="mb-6 text-4xl font-bold md:text-6xl">
           Document Conversion
-          <span className="text-primary"> Made Simple</span>
+          <br />
+          <span className="text-primary">Made Simple</span>
         </h1>
         <p className="text-muted-foreground mb-8 text-xl leading-relaxed">
           Transform your documents between different formats with professional
           quality results. Fast, secure, and completely free to use.
         </p>
 
-        <ButtonWithAnimatedArrow label="Get Started Free" href="/md-to-pdf" />
+        <ButtonWithAnimatedArrow label="Get Started Free" href="/convert" />
       </div>
     </section>
   )

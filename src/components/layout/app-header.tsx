@@ -2,7 +2,7 @@
 
 import { FileText, Menu, X } from "lucide-react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useSearchParams } from "next/navigation"
 import { useState } from "react"
 
 import { Logo } from "@/components/logo"
@@ -30,11 +30,15 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import { NAVIGATION, type NavigationItem } from "@/constants/navigation"
+import { CONFIG_LIST, type ConfigItem } from "@/constants/conversion"
 import { cn } from "@/lib/utils"
 
 export function AppHeader() {
+  const pathname = usePathname()
+
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false)
+
+  const isConvertPage = pathname === "/convert"
 
   return (
     <header className="sticky top-0 z-50 w-full border-b backdrop-blur">
@@ -43,7 +47,7 @@ export function AppHeader() {
 
         <NavigationMenu>
           <NavigationMenuList className="hidden md:flex">
-            {NAVIGATION.map((list) => (
+            {CONFIG_LIST.map((list) => (
               <NavigationMenuItem key={list.label}>
                 <NavigationMenuTrigger className="capitalize">
                   {list.label}
@@ -98,7 +102,7 @@ export function AppHeader() {
               defaultValue={["converters"]}
               className="w-full"
             >
-              {NAVIGATION.map((list) => (
+              {CONFIG_LIST.map((list) => (
                 <AccordionItem key={list.label} value={list.label}>
                   <AccordionTrigger className="capitalize">
                     {list.label}
@@ -134,22 +138,23 @@ export function AppHeader() {
   )
 }
 
-interface ListItemProps extends NavigationItem {
+interface ListItemProps extends ConfigItem {
   onClick?: () => void
 }
 
 function ListItem(props: ListItemProps) {
-  const pathname = usePathname()
+  const searchParams = useSearchParams()
+  const type = searchParams.get("type")
 
   const { label, href, description, icon: Icon, comingSoon, onClick } = props
 
-  const isActive = pathname === href
+  const isActive = type === href
 
   return (
     <li key={label} className="group relative">
       <Link
         onClick={comingSoon ? undefined : onClick}
-        href={comingSoon ? "" : href}
+        href={comingSoon ? "" : `/convert?type=${href}`}
         className={cn(
           "hover:text-primary focus:text-primary hover:bg-accent focus:bg-accent flex flex-col gap-1 rounded-sm p-2 transition-all outline-none",
           isActive && "text-primary",

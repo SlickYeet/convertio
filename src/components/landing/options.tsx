@@ -9,7 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { NAVIGATION } from "@/constants/navigation"
+import { CONFIG, CONFIG_LIST } from "@/constants/conversion"
 import { cn } from "@/lib/utils"
 
 export default function Options() {
@@ -26,7 +26,7 @@ export default function Options() {
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {NAVIGATION.map((list) => (
+        {CONFIG_LIST.map((list) => (
           <div key={list.label} className="space-y-4">
             <h3 className="mb-4 text-xl font-semibold capitalize">
               {list.label}
@@ -34,12 +34,15 @@ export default function Options() {
             {list.items.map((item) => {
               const {
                 label,
-                href,
+                href: hrefFromProps,
                 description,
                 icon: Icon,
                 popular,
                 comingSoon,
               } = item
+
+              // Ensure list.label is typed as keyof typeof CONFIG
+              const href = `/${CONFIG[list.label as keyof typeof CONFIG]}/${hrefFromProps}`
 
               return (
                 <Card

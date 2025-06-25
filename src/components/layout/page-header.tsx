@@ -1,12 +1,16 @@
 "use client"
 
-import { usePathname } from "next/navigation"
+import { useSearchParams } from "next/navigation"
+
+import { CONFIG } from "@/constants/conversion"
 
 export function PageHeader() {
-  const pathname = usePathname()
+  const searchPrams = useSearchParams()
+  const type =
+    (searchPrams.get("type") as keyof typeof CONFIG.converters) || "md-to-pdf"
 
-  switch (pathname) {
-    case "/md-to-pdf":
+  switch (type) {
+    case "md-to-pdf":
       return (
         <div className="mb-8 text-center">
           <h1 className="mb-2 text-4xl font-bold">Markdown to PDF Converter</h1>
@@ -15,7 +19,7 @@ export function PageHeader() {
           </p>
         </div>
       )
-    case "/html-to-pdf":
+    case "html-to-pdf":
       return (
         <div className="mb-8 text-center">
           <h1 className="mb-2 text-4xl font-bold">
@@ -27,6 +31,6 @@ export function PageHeader() {
         </div>
       )
     default:
-      return null
+      return <div className="mt-12" />
   }
 }
