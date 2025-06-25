@@ -5,21 +5,21 @@ import { getBrowser } from "@/lib/pupeteer"
 
 export async function POST(req: NextRequest) {
   try {
-    const { htmlContent } = await req.json()
-    if (!htmlContent || typeof htmlContent !== "string") {
+    const { input, inputType } = await req.json()
+    if (!input || typeof input !== "string") {
       return NextResponse.json(
-        { error: "Invalid or missing 'htmlContent' in request body" },
+        { error: "Invalid or missing 'input' in request body" },
         { status: 400 },
       )
     }
-    if (!htmlContent.trim()) {
+    if (!inputType) {
       return NextResponse.json(
-        { error: "HTML content cannot be empty" },
+        { error: "Missing 'inputType' in request body" },
         { status: 400 },
       )
     }
 
-    const sanitizedHtml = sanitizeHtml(htmlContent)
+    const sanitizedHtml = sanitizeHtml(input)
     const fullHtml = html(sanitizedHtml)
 
     const browser = await getBrowser()

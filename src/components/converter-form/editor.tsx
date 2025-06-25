@@ -2,11 +2,12 @@
 
 import { Copy, CopyCheck, FileText, Loader2 } from "lucide-react"
 import { useSearchParams } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { toast } from "sonner"
 
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
+import { CONFIG } from "@/constants/conversion"
 import { convert } from "@/lib/conversion"
 
 interface EditorProps {
@@ -22,11 +23,15 @@ export function Editor(props: EditorProps) {
   const searchParams = useSearchParams()
   const type = searchParams.get("type") || "md-to-pdf"
 
-  const [inputType, setInputType] = useState<string>("")
-  const [outputType, setOutputType] = useState<string>("")
   const [isConverting, setIsConverting] = useState<boolean>(false)
   const [isCoping, setIsCoping] = useState<boolean>(false)
   const [isCopied, setIsCopied] = useState<boolean>(false)
+
+  const config = CONFIG.converters[type]
+  // Get the input type without the leading dot
+  const apiEndpoint = config.apiEndpoint
+  const inputType = config.fileTypes[0].replace(/^\./, "")
+  const outputType = "pdf"
 
   const {
     input,
@@ -37,26 +42,18 @@ export function Editor(props: EditorProps) {
     setActiveTab,
   } = props
 
-  useEffect(() => {
-    if (type === "html-to-pdf") {
-      setInputType("html")
-      setOutputType("pdf")
-    } else if (type === "md-to-pdf") {
-      setInputType("markdown")
-      setOutputType("pdf")
-    } else {
-      setInputType("")
-      setOutputType("")
-      toast.error("Unsupported conversion type")
-    }
-  }, [type])
-
   async function handleConvert() {
     if (!input.trim()) {
       toast.error("Error", {
-        description: "Please enter content to convert.",
+        description: `Please enter some ${inputType} content to convert.`,
       })
       return
+    }
+
+    if (config.comingSoon) {
+      toast.error("Coming Soon", {
+        description: "This converter is not yet available.",
+      })
     }
 
     setIsConverting(true)
@@ -65,7 +62,12 @@ export function Editor(props: EditorProps) {
     setActiveTab("preview")
 
     try {
-      const pdfBlob = await convert(input, inputType, outputType)
+      const pdfBlob = await convert({
+        input,
+        inputType,
+        outputType,
+        apiEndpoint,
+      })
       setPdfBlob(pdfBlob)
       setIsConverted(true)
       setActiveTab("output")

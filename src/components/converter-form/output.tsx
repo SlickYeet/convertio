@@ -4,18 +4,22 @@ import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Separator } from "@/components/ui/separator"
+import { CONFIG } from "@/constants/conversion"
 import { downloadFile } from "@/lib/file"
-import { formatFileType } from "@/lib/utils"
+import type { CurrentType } from "@/types"
 
 interface OutputProps {
   input: string
   isConverted: boolean
   pdfBlob: Blob | null
-  fileType: string
+  currentType: CurrentType
 }
 
 export function Output(props: OutputProps) {
-  const { input, isConverted, pdfBlob, fileType } = props
+  const { input, isConverted, pdfBlob, currentType } = props
+
+  const config = CONFIG.converters[currentType]
+  const inputLabel = config.inputLabel
 
   function downloadPDF() {
     if (!pdfBlob) {
@@ -37,13 +41,13 @@ export function Output(props: OutputProps) {
     }
     const blob = new Blob([input], {
       type:
-        fileType === "md"
+        currentType === "md-to-pdf"
           ? "text/markdown"
-          : fileType === "html"
+          : currentType === "html-to-pdf"
             ? "text/html"
             : "text/plain",
     })
-    downloadFile(blob, `document.${fileType}`)
+    downloadFile(blob, `document.${currentType}`)
   }
 
   return (
@@ -58,8 +62,7 @@ export function Output(props: OutputProps) {
               </span>
             </div>
             <p className="text-sm text-emerald-700 dark:text-emerald-300">
-              Your {formatFileType(fileType).toLowerCase()} has been converted
-              to PDF format.
+              Your {inputLabel} has been converted to PDF format.
             </p>
           </div>
 
@@ -82,11 +85,11 @@ export function Output(props: OutputProps) {
               <Button
                 onClick={downloadOriginal}
                 variant="outline"
-                className="justify-start"
+                className="justify-start capitalize"
                 aria-label="Download Markdown"
               >
                 <Download className="mr-2 size-4" />
-                Download {formatFileType(fileType)} Document
+                Download {inputLabel}
               </Button>
             </div>
 

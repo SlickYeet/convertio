@@ -1,13 +1,14 @@
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { sanitizeHtml } from "@/lib/full-html"
 import { renderMarkdown } from "@/lib/markdown"
+import type { CurrentType } from "@/types"
 
 export function Preview({
   input,
-  fileType,
+  currentType,
 }: {
   input: string
-  fileType: string
+  currentType: CurrentType
 }) {
   const sanitizedHtml = sanitizeHtml(input)
 
@@ -19,7 +20,7 @@ export function Preview({
             className="prose prose-sm max-w-none"
             dangerouslySetInnerHTML={{
               __html:
-                fileType === "md"
+                currentType === "md-to-pdf"
                   ? renderMarkdown(sanitizedHtml)
                   : sanitizedHtml,
             }}

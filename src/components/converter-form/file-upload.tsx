@@ -4,25 +4,30 @@ import { FilePlus2, Upload } from "lucide-react"
 import { useCallback, useState } from "react"
 
 import { Button } from "@/components/ui/button"
+import { CONFIG } from "@/constants/conversion"
 import { cn } from "@/lib/utils"
+import type { CurrentType } from "@/types"
 
 interface FileUploadProps {
   setInput: (input: string) => void
   setIsConverted: (isConverted: boolean) => void
   setError: (error: string | null) => void
   setPdfBlob: (pdfBlob: Blob | null) => void
-  fileType: string
+  currentType: CurrentType
 }
 
 export function FileUpload(props: FileUploadProps) {
-  const { setInput, setIsConverted, setError, setPdfBlob, fileType } = props
+  const { setInput, setIsConverted, setError, setPdfBlob, currentType } = props
 
   const [isDragOver, setIsDragOver] = useState<boolean>(false)
 
+  const config = CONFIG.converters[currentType]
+  const fileTypes = config.fileTypes.join(", or ")
+
   const handleFileUpload = useCallback(
     (file: File) => {
-      if (!file.name.endsWith(`.${fileType}`)) {
-        setError(`Please upload a valid .${fileType} file.`)
+      if (!config.fileTypes.some((ext: string) => file.name.endsWith(ext))) {
+        setError(`Please upload a valid ${fileTypes} file.`)
         return
       }
 
@@ -36,7 +41,12 @@ export function FileUpload(props: FileUploadProps) {
       }
       reader.readAsText(file)
     },
-    [fileType, setInput, setIsConverted, setError, setPdfBlob],
+    /**
+     * We are not including `config.fileTypes` and `fileTypes` in the
+     * dependency array because they should not change.
+     */
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [setInput, setIsConverted, setError, setPdfBlob],
   )
 
   const handleDrop = useCallback(
@@ -77,7 +87,7 @@ export function FileUpload(props: FileUploadProps) {
     >
       <Upload className="text-muted-foreground mx-auto mb-2 size-8" />
       <p className="text-muted-foreground mb-2 text-sm">
-        Drag and drop your .{fileType} file here, or
+        Drag and drop your {fileTypes} file here, or
       </p>
 
       <Button
@@ -91,7 +101,7 @@ export function FileUpload(props: FileUploadProps) {
       <input
         id="file-upload"
         type="file"
-        accept={`.${fileType}`}
+        accept={config.fileTypes.join(", ")}
         onChange={(e) => {
           const file = e.target.files?.[0]
           if (file) handleFileUpload(file)

@@ -3,30 +3,30 @@ import { Code, Diff, File, LucideIcon, Text } from "lucide-react"
 export const CONFIG: ConfigList = {
   converters: {
     "md-to-pdf": {
-      label: "Markdown to PDF",
+      label: "Markdown to PDF Converter",
       href: "md-to-pdf",
       description: "Convert Markdown files to PDF documents.",
-      inputLabel: "Markdown File",
+      inputLabel: "markdown file",
       fileTypes: [".md", ".txt"],
       mimeTypes: ["text/markdown", "text/plain"],
       apiEndpoint: "/api/convert/md-to-pdf",
       popular: true,
     },
     "html-to-pdf": {
-      label: "HTML to PDF",
+      label: "Markdown to HTML Converter",
       href: "html-to-pdf",
       description: "Convert HTML files to PDF documents.",
-      inputLabel: "HTML File",
+      inputLabel: "HTML file",
       fileTypes: [".html", ".htm"],
       mimeTypes: ["text/html"],
       apiEndpoint: "/api/convert/html-to-pdf",
       icon: Code,
     },
     "text-to-pdf": {
-      label: "Text to PDF",
+      label: "Text to PDF Converter",
       href: "text-to-pdf",
-      description: "Convert plain text files to PDF documents.",
-      inputLabel: "Text File",
+      description: "Convert plain text files to PDF format.",
+      inputLabel: "text file",
       fileTypes: [".txt"],
       mimeTypes: ["text/plain"],
       apiEndpoint: "/api/convert/text-to-pdf",
@@ -36,7 +36,7 @@ export const CONFIG: ConfigList = {
   },
   tools: {
     "text-diff": {
-      label: "Text Diff",
+      label: "Text Diff Tool",
       href: "text-diff",
       description: "Compare two text files and highlight differences.",
       inputLabel: "Text Files",

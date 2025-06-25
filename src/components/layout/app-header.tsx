@@ -145,13 +145,12 @@ function ListItem(props: ListItemProps) {
   const { label, href, description, icon: Icon, comingSoon, onClick } = props
 
   const isActive = type === href
-  const isDev = process.env.NODE_ENV === "development"
 
   return (
     <li key={label} className="group relative">
       <Link
         onClick={comingSoon ? undefined : onClick}
-        href={comingSoon ? "" : isDev ? `/convert?type=${href}` : `/${href}`}
+        href={comingSoon ? "" : `/convert?type=${href}`}
         className={cn(
           "hover:text-primary focus:text-primary hover:bg-accent focus:bg-accent flex flex-col gap-1 rounded-sm p-2 transition-all outline-none",
           isActive && "text-primary",

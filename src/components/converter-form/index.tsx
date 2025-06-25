@@ -1,7 +1,7 @@
 "use client"
 
 import { AlertCircle, CheckCircle, FileText } from "lucide-react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import { Editor } from "@/components/converter-form/editor"
 import { FileUpload } from "@/components/converter-form/file-upload"
@@ -16,11 +16,12 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { sampleContent } from "@/constants/sample"
-import { formatFileType } from "@/lib/utils"
+import { CONFIG } from "@/constants/conversion"
+import { SAMPLE_CONTENT } from "@/constants/sample"
+import type { CurrentType } from "@/types"
 
-export function ConverterForm({ fileType }: { fileType: string }) {
-  const sampleInput = sampleContent(fileType)
+export function ConverterForm({ currentType }: { currentType: CurrentType }) {
+  const sampleInput = SAMPLE_CONTENT[currentType]
 
   const [input, setInput] = useState<string>(sampleInput)
   const [isConverted, setIsConverted] = useState<boolean>(false)
@@ -28,16 +29,32 @@ export function ConverterForm({ fileType }: { fileType: string }) {
   const [pdfBlob, setPdfBlob] = useState<Blob | null>(null)
   const [activeTab, setActiveTab] = useState<string>("preview")
 
+  const config = CONFIG.converters[currentType]
+  const inputLabel = config.inputLabel
+  const fileTypes = config.fileTypes.join(", or ")
+
+  useEffect(() => {
+    setInput(sampleInput)
+    setIsConverted(false)
+    setError(null)
+    setPdfBlob(null)
+    /**
+     * It does not make sense to include `sampleInput` in the dependency array
+     * because it is a static constant value.
+     */
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentType])
+
   return (
     <>
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
+          <CardTitle className="flex items-center gap-2 capitalize">
             <FileText className="size-5" />
-            Input {formatFileType(fileType)}
+            Input {inputLabel}
           </CardTitle>
           <CardDescription>
-            Paste your {fileType} content or upload a .{fileType} file
+            Paste your {inputLabel} content or upload a {fileTypes} file
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -46,7 +63,7 @@ export function ConverterForm({ fileType }: { fileType: string }) {
             setIsConverted={setIsConverted}
             setError={setError}
             setPdfBlob={setPdfBlob}
-            fileType={fileType}
+            currentType={currentType}
           />
 
           {error && (
@@ -85,7 +102,7 @@ export function ConverterForm({ fileType }: { fileType: string }) {
           <CardDescription>
             {isConverted
               ? "Your PDF is ready for download"
-              : `Live preview of your ${formatFileType(fileType).toLowerCase()} content`}
+              : `Live preview of your ${inputLabel} content`}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -102,7 +119,7 @@ export function ConverterForm({ fileType }: { fileType: string }) {
             </TabsList>
 
             <TabsContent value="preview" className="mt-4">
-              <Preview input={input} fileType={fileType} />
+              <Preview input={input} currentType={currentType} />
             </TabsContent>
 
             <TabsContent value="output" className="mt-4">
@@ -110,7 +127,7 @@ export function ConverterForm({ fileType }: { fileType: string }) {
                 input={input}
                 isConverted={isConverted}
                 pdfBlob={pdfBlob}
-                fileType={fileType}
+                currentType={currentType}
               />
             </TabsContent>
           </Tabs>

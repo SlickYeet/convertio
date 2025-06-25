@@ -1,15 +1,5 @@
-export const sampleContent = (fileType: string): string => {
-  switch (fileType) {
-    case "md":
-      return SAMPLE_MARKDOWN
-    case "html":
-      return SAMPLE_HTML
-    default:
-      return SAMPLE_MARKDOWN
-  }
-}
-
-const SAMPLE_MARKDOWN = `# Welcome to Markdown to PDF Converter
+export const SAMPLE_CONTENT = {
+  "md-to-pdf": `# Welcome to Markdown to PDF Converter
 
 ## Features
 
@@ -45,9 +35,9 @@ function convertToPDF(markdown) {
 
 ---
 
-**Ready to convert?** Just paste your markdown above and click convert!`
+**Ready to convert?** Just paste your markdown above and click convert!`,
 
-const SAMPLE_HTML = `<!DOCTYPE html>
+  "html-to-pdf": `<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8">
@@ -68,4 +58,5 @@ const SAMPLE_HTML = `<!DOCTYPE html>
         <p>&copy; 2023 My Simple HTML Document</p>
     </footer>
   </body>
-</html>`
+</html>`,
+}

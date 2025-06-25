@@ -6,21 +6,21 @@ import { getBrowser } from "@/lib/pupeteer"
 
 export async function POST(req: NextRequest) {
   try {
-    const { markdown } = await req.json()
-    if (!markdown || typeof markdown !== "string") {
+    const { input, inputType } = await req.json()
+    if (!input || typeof input !== "string") {
       return NextResponse.json(
-        { error: "Invalid or missing 'markdown' content" },
+        { error: "Invalid or missing 'input' in request body" },
         { status: 400 },
       )
     }
-    if (!markdown.trim()) {
+    if (!inputType) {
       return NextResponse.json(
-        { error: "Markdown content cannot be empty" },
+        { error: "Missing 'inputType' in request body" },
         { status: 400 },
       )
     }
 
-    const htmlContent = await marked(markdown)
+    const htmlContent = await marked(input)
     const sanitizedHtml = sanitizeHtml(htmlContent)
     const fullHtml = html(sanitizedHtml)
 

@@ -1,9 +1,17 @@
-export async function convert(
-  input: string,
-  inputType: string,
-  outputType: string,
-): Promise<Blob> {
-  const response = await fetch("/api/convert", {
+import type { InputType, OutputType } from "@/types"
+
+export async function convert({
+  input,
+  inputType,
+  outputType,
+  apiEndpoint,
+}: {
+  input: string
+  inputType: InputType
+  outputType: OutputType
+  apiEndpoint: string
+}): Promise<Blob> {
+  const response = await fetch(apiEndpoint, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
