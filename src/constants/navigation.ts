@@ -1,18 +1,4 @@
-import { Code, File, LucideIcon } from "lucide-react"
-
-export type NavigationItem = {
-  label: string
-  href: string
-  description: string
-  icon?: LucideIcon
-  popular?: boolean
-  comingSoon?: boolean
-}
-
-type NavigationListProps = {
-  label: string
-  items: NavigationItem[]
-}
+import { Code, Diff, File, LucideIcon, Text } from "lucide-react"
 
 export const NAVIGATION: NavigationListProps[] = [
   {
@@ -39,4 +25,30 @@ export const NAVIGATION: NavigationListProps[] = [
       },
     ],
   },
+  {
+    label: "tools",
+    items: [
+      {
+        label: "Text Diff",
+        href: "/tools/text-diff",
+        description: "Compare two text files and highlight differences.",
+        icon: Diff,
+        comingSoon: true,
+      },
+    ],
+  },
 ]
+
+export type NavigationItem = {
+  label: string
+  href: string
+  description: string
+  icon?: LucideIcon
+  popular?: boolean
+  comingSoon?: boolean
+}
+
+type NavigationListProps = {
+  label: string
+  items: NavigationItem[]
+}

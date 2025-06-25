@@ -28,7 +28,9 @@ export default function Options() {
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {NAVIGATION.map((list) => (
           <div key={list.label} className="space-y-4">
-            <h3 className="mb-4 text-xl font-semibold">{list.label}</h3>
+            <h3 className="mb-4 text-xl font-semibold capitalize">
+              {list.label}
+            </h3>
             {list.items.map((item) => {
               const {
                 label,
@@ -67,7 +69,9 @@ export default function Options() {
                           <FileText className="size-6" />
                         )}
                       </div>
-                      <CardTitle className="text-xl">{label}</CardTitle>
+                      <CardTitle className="text-xl capitalize">
+                        {label}
+                      </CardTitle>
                     </div>
                     <CardDescription className="text-base leading-relaxed">
                       {description}
