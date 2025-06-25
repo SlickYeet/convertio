@@ -35,6 +35,23 @@ export const NAVIGATION: NavigationListProps[] = [
         icon: Diff,
         comingSoon: true,
       },
+      {
+        label: "Markdown Editor",
+        href: "/tools/markdown-editor",
+        description: "Preview Markdown files in real-time as you edit.",
+        comingSoon: true,
+      },
+    ],
+  },
+  {
+    label: "utilities",
+    items: [
+      {
+        label: "Byte Calculator",
+        href: "/utils/byte-calculator",
+        description: "Convert between different byte units (KB, MB, GB, etc.).",
+        comingSoon: true,
+      },
     ],
   },
 ]
