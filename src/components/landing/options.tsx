@@ -18,8 +18,8 @@ export default function Options() {
           Choose Your Conversion Tool
         </h2>
         <p className="text-muted-foreground mx-auto max-w-2xl text-lg text-balance">
-          Select from our range of conversion tools, each optimized for specific
-          document types and use cases.
+          Select from our range of converters, tools and utilities, each
+          optimized for specific document types and use cases.
         </p>
       </div>
 
@@ -41,6 +41,19 @@ export default function Options() {
 
               const category = list.label.toLowerCase() as keyof typeof CONFIG
               const href = `/${category}?type=${hrefFromProps}`
+
+              const buttonLabel = (() => {
+                switch (category) {
+                  case "converters":
+                    return "Start Converting"
+                  case "tools":
+                    return "Use Tool"
+                  case "utilities":
+                    return "Use Utility"
+                  default:
+                    return "Start Now"
+                }
+              })()
 
               return (
                 <Card
@@ -70,7 +83,7 @@ export default function Options() {
                         {label}
                       </CardTitle>
                     </div>
-                    <CardDescription className="text-base leading-relaxed">
+                    <CardDescription className="line-clamp-2 text-base leading-relaxed">
                       {description}
                     </CardDescription>
                   </CardHeader>
@@ -78,7 +91,7 @@ export default function Options() {
                   <CardContent className="pt-0">
                     <ButtonWithAnimatedArrow
                       disabled={comingSoon}
-                      label="Start Converting"
+                      label={buttonLabel}
                       href={href}
                       comingSoon={comingSoon}
                       size="default"
