@@ -286,13 +286,13 @@ export function ConvertBatchFiles(props: ConvertBatchFilesProps) {
               >
                 <div className="flex-shrink-0">
                   {file.status === "completed" && (
-                    <CheckCircle className="size-5 text-green-600" />
+                    <CheckCircle className="size-5 text-emerald-500" />
                   )}
                   {file.status === "error" && (
-                    <AlertCircle className="size-5 text-red-600" />
+                    <AlertCircle className="text-destructive size-5" />
                   )}
                   {file.status === "converting" && (
-                    <Loader2 className="size-5 animate-spin text-blue-600" />
+                    <Loader2 className="text-primary size-5 animate-spin" />
                   )}
                   {file.status === "pending" && (
                     <FileText className="text-muted-foreground size-5" />
