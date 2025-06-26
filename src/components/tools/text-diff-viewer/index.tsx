@@ -3,40 +3,10 @@
 import { Copy, Diff, Maximize2, Minimize2, Trash2 } from "lucide-react"
 import Prism from "prismjs"
 import { useCallback, useEffect, useRef, useState } from "react"
-import DiffViewer, { DiffMethod } from "react-diff-viewer"
-
-import "prismjs/components/prism-clike"
-import "prismjs/components/prism-markup"
-import "prismjs/components/prism-markdown"
-import "prismjs/components/prism-javascript"
-import "prismjs/components/prism-typescript"
-import "prismjs/components/prism-json"
-import "prismjs/components/prism-css"
-import "prismjs/components/prism-bash"
-import "prismjs/components/prism-python"
-import "prismjs/components/prism-ruby"
-import "prismjs/components/prism-go"
-import "prismjs/components/prism-java"
-import "prismjs/components/prism-sql"
-import "prismjs/components/prism-rust"
-import "prismjs/components/prism-kotlin"
-import "prismjs/components/prism-swift"
-import "prismjs/components/prism-scala"
-import "prismjs/components/prism-perl"
-import "prismjs/components/prism-lua"
-import "prismjs/components/prism-haskell"
-import "prismjs/components/prism-elixir"
-import "prismjs/components/prism-dart"
-import "prismjs/components/prism-matlab"
-import "prismjs/components/prism-yaml"
-import "prismjs/components/prism-toml"
-import "prismjs/components/prism-ini"
-import "prismjs/components/prism-properties"
-import "prismjs/components/prism-textile"
-import "prismjs/components/prism-asciidoc"
-import "prismjs/components/prism-csv"
+import { DiffMethod } from "react-diff-viewer"
 
 import { Hint } from "@/components/hint"
+import { DiffViewer } from "@/components/tools/text-diff-viewer/diff-viewer"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -58,6 +28,39 @@ import { Textarea } from "@/components/ui/textarea"
 import { CONFIG } from "@/constants/conversion"
 import { cn } from "@/lib/utils"
 import type { CurrentType } from "@/types"
+
+const LANGUAGES = [
+  { value: "plain", label: "Plain Text" },
+  { value: "markdown", label: "Markdown" },
+  { value: "javascript", label: "JavaScript" },
+  { value: "typescript", label: "TypeScript" },
+  { value: "json", label: "JSON" },
+  { value: "css", label: "CSS" },
+  { value: "markup", label: "HTML/XML" },
+  { value: "bash", label: "Bash/Shell" },
+  { value: "python", label: "Python" },
+  { value: "ruby", label: "Ruby" },
+  { value: "go", label: "Go" },
+  { value: "java", label: "Java" },
+  { value: "sql", label: "SQL" },
+  { value: "rust", label: "Rust" },
+  { value: "kotlin", label: "Kotlin" },
+  { value: "swift", label: "Swift" },
+  { value: "scala", label: "Scala" },
+  { value: "perl", label: "Perl" },
+  { value: "lua", label: "Lua" },
+  { value: "haskell", label: "Haskell" },
+  { value: "elixir", label: "Elixir" },
+  { value: "dart", label: "Dart" },
+  { value: "matlab", label: "MATLAB" },
+  { value: "yaml", label: "YAML" },
+  { value: "toml", label: "TOML" },
+  { value: "ini", label: "INI" },
+  { value: "properties", label: "Properties" },
+  { value: "textile", label: "Textile" },
+  { value: "asciidoc", label: "AsciiDoc" },
+  { value: "csv", label: "CSV" },
+]
 
 interface TextDiffViewerProps {
   currentType: CurrentType
@@ -233,36 +236,15 @@ export function TextDiffViewer(props: TextDiffViewerProps) {
                   <SelectValue placeholder="Select Language" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="plain">Plain Text</SelectItem>
-                  <SelectItem value="markdown">Markdown</SelectItem>
-                  <SelectItem value="javascript">JavaScript</SelectItem>
-                  <SelectItem value="typescript">TypeScript</SelectItem>
-                  <SelectItem value="json">JSON</SelectItem>
-                  <SelectItem value="css">CSS</SelectItem>
-                  <SelectItem value="markup">HTML/XML</SelectItem>
-                  <SelectItem value="bash">Bash/Shell</SelectItem>
-                  <SelectItem value="python">Python</SelectItem>
-                  <SelectItem value="ruby">Ruby</SelectItem>
-                  <SelectItem value="go">Go</SelectItem>
-                  <SelectItem value="java">Java</SelectItem>
-                  <SelectItem value="sql">SQL</SelectItem>
-                  <SelectItem value="rust">Rust</SelectItem>
-                  <SelectItem value="kotlin">Kotlin</SelectItem>
-                  <SelectItem value="swift">Swift</SelectItem>
-                  <SelectItem value="scala">Scala</SelectItem>
-                  <SelectItem value="perl">Perl</SelectItem>
-                  <SelectItem value="lua">Lua</SelectItem>
-                  <SelectItem value="haskell">Haskell</SelectItem>
-                  <SelectItem value="elixir">Elixir</SelectItem>
-                  <SelectItem value="dart">Dart</SelectItem>
-                  <SelectItem value="matlab">MATLAB</SelectItem>
-                  <SelectItem value="yaml">YAML</SelectItem>
-                  <SelectItem value="toml">TOML</SelectItem>
-                  <SelectItem value="ini">INI</SelectItem>
-                  <SelectItem value="properties">Properties</SelectItem>
-                  <SelectItem value="textile">Textile</SelectItem>
-                  <SelectItem value="asciidoc">AsciiDoc</SelectItem>
-                  <SelectItem value="csv">CSV</SelectItem>
+                  {LANGUAGES.map((lang) => (
+                    <SelectItem
+                      key={lang.value}
+                      value={lang.value}
+                      className="capitalize"
+                    >
+                      {lang.label}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
 
@@ -294,7 +276,7 @@ export function TextDiffViewer(props: TextDiffViewerProps) {
         </div>
         <CardContent
           className={cn(
-            "overflow-y-auto",
+            "overflow-y-auto break-all",
             oldText || newText ? "h-full max-h-[calc(100dvh-10rem)]" : "hidden",
           )}
         >

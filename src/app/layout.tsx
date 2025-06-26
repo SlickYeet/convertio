@@ -10,7 +10,6 @@ import { siteConfig } from "@/config"
 import { cn } from "@/lib/utils"
 
 import "./globals.css"
-import "./dracula-prism.css"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

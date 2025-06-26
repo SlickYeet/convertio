@@ -21,9 +21,9 @@ http://prismjs.com/download.html#themes=prism&languages=markup+css+clike+javascr
 /* Scrollbars */
 
 :root {
-  --background: #282a36;
+  /* --background: #282a36; */
   --comment: #6272a4;
-  --foreground: #f8f8f2;
+  /* --foreground: #f8f8f2; */
   --selection: #44475a;
 
   --cyan: #8be9fd;

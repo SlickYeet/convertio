@@ -20,7 +20,7 @@ md.renderer.rules.link_open = (tokens, idx) => {
   const title = token.attrGet("title")
     ? ` title="${token.attrGet("title")}"`
     : ""
-  return `<a href="${href}"${title} class="text-sky-600 dark:text-sky-400 underline hover:text-sky-600/80 dark:hover:text-sky-400/80 transition-colors" target="_blank" rel="noopener noreferrer">`
+  return `<a href="${href}"${title} class="text-primary underline hover:text-primary/80 transition-colors" target="_blank" rel="noopener noreferrer">`
 }
 md.renderer.rules.image = (tokens, idx) => {
   const token = tokens[idx]
@@ -47,7 +47,7 @@ md.renderer.rules.table_open = () =>
 md.renderer.rules.th_open = () => '<th class="border px-4 py-2">'
 md.renderer.rules.td_open = () => '<td class="border px-4 py-2">'
 md.renderer.rules.blockquote_open = () =>
-  '<blockquote class="border-l-4 rounded-l border-sky-600 dark:border-sky-400 pl-4 italic my-4 text-muted-foreground">'
+  '<blockquote class="border-l-4 rounded-l border-primary pl-4 italic my-4 text-muted-foreground">'
 
 export function renderMarkdown(text: string): string {
   return md.render(text)
