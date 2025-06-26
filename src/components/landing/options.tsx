@@ -41,8 +41,8 @@ export default function Options() {
                 comingSoon,
               } = item
 
-              // Ensure list.label is typed as keyof typeof CONFIG
-              const href = `/${CONFIG[list.label as keyof typeof CONFIG]}/${hrefFromProps}`
+              const category = list.label.toLowerCase() as keyof typeof CONFIG
+              const href = `/${category}/${hrefFromProps}`
 
               return (
                 <Card
