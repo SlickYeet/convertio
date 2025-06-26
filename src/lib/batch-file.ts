@@ -16,7 +16,6 @@ export async function convertBatchFile(
   const config = CONFIG.converters[currentType]
   const apiEndpoint = config.apiEndpoint
   const inputType = config.fileTypes[0].replace(/^\./, "")
-  const outputType = "pdf"
 
   try {
     setBatchFiles((prev) =>
@@ -26,10 +25,9 @@ export async function convertBatchFile(
     )
 
     const pdfBlob = await convert({
+      apiEndpoint,
       input: file.content,
       inputType,
-      outputType,
-      apiEndpoint,
     })
 
     return {

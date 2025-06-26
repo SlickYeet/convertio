@@ -31,7 +31,6 @@ export function Editor(props: EditorProps) {
   const config = CONFIG.converters[type]
   const apiEndpoint = config.apiEndpoint
   const inputType = config.fileTypes[0].replace(/^\./, "")
-  const outputType = "pdf"
 
   const {
     input,
@@ -63,10 +62,9 @@ export function Editor(props: EditorProps) {
 
     try {
       const pdfBlob = await convert({
+        apiEndpoint,
         input,
         inputType,
-        outputType,
-        apiEndpoint,
       })
       setPdfBlob(pdfBlob)
       setIsConverted(true)

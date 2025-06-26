@@ -13,8 +13,6 @@ export type CurrentType = keyof typeof SAMPLE_CONTENT
  */
 export type InputType = (typeof CONFIG.converters)[CurrentType]["fileTypes"][0]
 
-export type OutputType = "pdf"
-
 export type BatchFile = {
   id: string
   file: File

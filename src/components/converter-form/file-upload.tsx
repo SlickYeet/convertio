@@ -37,7 +37,7 @@ export function FileUpload(props: FileUploadProps) {
 
   const handleFileUpload = useCallback(
     (file: File) => {
-      if (!config.fileTypes.some((ext: string) => file.name.endsWith(ext))) {
+      if (!config.fileTypes.some((ext) => file.name.endsWith(ext))) {
         setError(`Please upload a valid ${fileTypes} file.`)
         return
       }
@@ -52,12 +52,7 @@ export function FileUpload(props: FileUploadProps) {
       }
       reader.readAsText(file)
     },
-    /**
-     * We are not including `config.fileTypes` and `fileTypes` in the
-     * dependency array because they should not change.
-     */
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [setInput, setIsConverted, setError, setPdfBlob],
+    [config, fileTypes, setInput, setIsConverted, setError, setPdfBlob],
   )
 
   const handleBatchFileUpload = useCallback(
@@ -127,7 +122,7 @@ export function FileUpload(props: FileUploadProps) {
           document.getElementById("single-file-upload")?.click()
         } else if (conversionMode === "batch") {
           document.getElementById("batch-file-upload")?.click()
-        } else return
+        }
       }}
       className={cn(
         "rounded-lg border-2 border-dashed p-6 text-center transition-colors",

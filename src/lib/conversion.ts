@@ -1,26 +1,20 @@
-import type { InputType, OutputType } from "@/types"
+import type { InputType } from "@/types"
 
 export async function convert({
+  apiEndpoint,
   input,
   inputType,
-  outputType,
-  apiEndpoint,
 }: {
+  apiEndpoint: string
   input: string
   inputType: InputType
-  outputType: OutputType
-  apiEndpoint: string
 }): Promise<Blob> {
   const response = await fetch(apiEndpoint, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      input,
-      inputType,
-      outputType,
-    }),
+    body: JSON.stringify({ input, inputType }),
   })
 
   if (!response.ok) {

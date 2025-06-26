@@ -116,11 +116,6 @@ export function ConvertBatchFiles(props: ConvertBatchFilesProps) {
 
     setIsBatchConverting(false)
     setIsConverted(true)
-
-    const successCount = batchFiles.filter(
-      (f) => f.status === "completed",
-    ).length
-    const failCount = batchFiles.filter((f) => f.status === "error").length
   }
 
   function downloadBatchFile(file: BatchFile) {
