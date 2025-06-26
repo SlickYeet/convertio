@@ -121,10 +121,6 @@ export function ConvertBatchFiles(props: ConvertBatchFilesProps) {
       (f) => f.status === "completed",
     ).length
     const failCount = batchFiles.filter((f) => f.status === "error").length
-
-    toast.success("Batch Conversion Complete", {
-      description: `${successCount} files converted successfully${failCount > 0 ? `, ${failCount} failed` : ""}.`,
-    })
   }
 
   function downloadBatchFile(file: BatchFile) {
@@ -139,6 +135,8 @@ export function ConvertBatchFiles(props: ConvertBatchFilesProps) {
   }
 
   function downloadAllBatchFiles() {
+    // TODO: Download as zip
+
     const completedFiles = batchFiles?.filter(
       (f) => f.status === "completed" && f.pdfBlob,
     )
@@ -153,10 +151,6 @@ export function ConvertBatchFiles(props: ConvertBatchFilesProps) {
       // Stagger downloads
       setTimeout(() => downloadBatchFile(file), index * 100)
     })
-
-    toast.success("Batch Started", {
-      description: `Downloading ${completedFiles?.length} files...`,
-    })
   }
 
   function removeBatchFile(id: string) {
@@ -166,6 +160,7 @@ export function ConvertBatchFiles(props: ConvertBatchFilesProps) {
   function clearBatchFiles() {
     setBatchFiles([])
     setBatchProgress(0)
+    setIsConverted(false)
   }
 
   return (
