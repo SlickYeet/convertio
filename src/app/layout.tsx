@@ -8,6 +8,8 @@ import { cn } from "@/lib/utils"
 
 import "./globals.css"
 
+import { siteConfig } from "@/config"
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -19,8 +21,8 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "MD To PDF Converter",
-  description: "Easily convert Markdown files to PDF.",
+  title: siteConfig.appName,
+  description: siteConfig.description,
 }
 
 export default function RootLayout({
