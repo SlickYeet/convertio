@@ -66,9 +66,11 @@ export function ApiDebug() {
   }
 
   useEffect(() => {
-    checkAllEndpoints()
+    if (!isHidden) {
+      checkAllEndpoints()
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [isHidden])
 
   if (siteConfig.isDev) {
     return (
