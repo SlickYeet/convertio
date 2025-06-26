@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 
+import { ApiDebug } from "@/components/api-debug"
 import { DevIndicator } from "@/components/dev-indicator"
 import { AppHeader } from "@/components/layout/app-header"
 import { Footer } from "@/components/layout/footer"
@@ -40,6 +41,7 @@ export default function RootLayout({
             <div className="container px-2.5 md:px-4">
               <AppHeader />
               <div className="flex min-h-[calc(100vh-4rem-1px)] flex-col justify-between">
+                {siteConfig.isDev && <ApiDebug />}
                 <main>{children}</main>
                 <Footer />
               </div>
