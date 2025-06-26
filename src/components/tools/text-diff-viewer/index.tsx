@@ -26,6 +26,8 @@ import {
 import { Switch } from "@/components/ui/switch"
 import { Textarea } from "@/components/ui/textarea"
 import { CONFIG } from "@/constants/conversion"
+import { useIsMobile } from "@/hooks/use-mobile"
+import { useIsMounted } from "@/hooks/use-mounted"
 import { cn } from "@/lib/utils"
 import type { CurrentType } from "@/types"
 
@@ -69,6 +71,8 @@ interface TextDiffViewerProps {
 }
 
 export function TextDiffViewer(props: TextDiffViewerProps) {
+  const isMounted = useIsMounted()
+  const isMobile = useIsMobile()
   const containerRef = useRef<HTMLDivElement>(null)
 
   const {
@@ -79,7 +83,6 @@ export function TextDiffViewer(props: TextDiffViewerProps) {
 
   const config = CONFIG.tools[currentType as keyof typeof CONFIG.tools]
 
-  const [mounted, setMounted] = useState<boolean>(false)
   const [oldText, setOldText] = useState<string>(oldTextFromProps || "")
   const [newText, setNewText] = useState<string>(newTextFromProps || "")
   const [splitView, setSplitView] = useState<boolean>(true)
@@ -88,8 +91,8 @@ export function TextDiffViewer(props: TextDiffViewerProps) {
   const [isFullscreen, setIsFullscreen] = useState(false)
 
   useEffect(() => {
-    setMounted(true)
-  }, [])
+    setSplitView(isMobile ? false : true)
+  }, [isMobile])
 
   const onLineNumberClick = useCallback(
     (id: string, e: React.MouseEvent<HTMLTableCellElement>): void => {
@@ -144,7 +147,7 @@ export function TextDiffViewer(props: TextDiffViewerProps) {
     }
   }
 
-  if (!mounted) {
+  if (!isMounted) {
     return null
   }
 
@@ -178,7 +181,7 @@ export function TextDiffViewer(props: TextDiffViewerProps) {
             </Hint>
           )}
         </div>
-        <CardContent className="flex gap-6">
+        <CardContent className="flex flex-col gap-6 md:flex-row">
           <div className="flex-1">
             <Label className="mb-2">Old Text</Label>
             <div className="group relative">
@@ -209,15 +212,15 @@ export function TextDiffViewer(props: TextDiffViewerProps) {
         </CardContent>
       </Card>
 
-      <Card ref={containerRef} className="rounded-t-none border-t-0">
-        <div className="flex items-center justify-between pr-6">
+      <Card ref={containerRef} className="@container rounded-t-none border-t-0">
+        <div className="flex flex-col justify-between gap-y-4 pr-6 @sm:flex-row @sm:items-center">
           <CardHeader className="flex-1">
             <CardTitle>Difference</CardTitle>
             <CardDescription>
               {splitView ? "Side-by-Side View" : "Unified View"}
             </CardDescription>
           </CardHeader>
-          <div className="space-y-3">
+          <div className="space-y-3 pl-6 @sm:px-0">
             <div className="flex items-center gap-2">
               <Switch
                 id="side-by-side"
@@ -232,7 +235,7 @@ export function TextDiffViewer(props: TextDiffViewerProps) {
                 defaultValue={syntaxLanguage}
                 onValueChange={setSyntaxLanguage}
               >
-                <SelectTrigger className="w-[150px]">
+                <SelectTrigger className="min-w-[150px] flex-1 @sm:flex-none">
                   <SelectValue placeholder="Select Language" />
                 </SelectTrigger>
                 <SelectContent>
@@ -250,7 +253,7 @@ export function TextDiffViewer(props: TextDiffViewerProps) {
 
               <Hint
                 label={isFullscreen ? "Exit Fullscreen" : "Fullscreen"}
-                side="left"
+                side="top"
                 asChild
               >
                 <Button
