@@ -12,7 +12,7 @@ export function ConverterForm({ currentType }: { currentType: CurrentType }) {
   const sampleInput = SAMPLE_CONTENT[currentType]
 
   const [conversionMode, setConversionMode] = useState<"single" | "batch">(
-    "batch",
+    "single",
   )
   const [activeTab, setActiveTab] = useState<string>("preview")
   // Single file conversion stat

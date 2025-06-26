@@ -30,7 +30,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import { CONFIG_LIST, type ConfigItem } from "@/constants/conversion"
+import { CONFIG, CONFIG_LIST, type ConfigItem } from "@/constants/conversion"
 import { cn } from "@/lib/utils"
 
 export function AppHeader() {
@@ -50,13 +50,20 @@ export function AppHeader() {
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <ul className="grid w-[400px] gap-2 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-                    {list.items.map((item) => (
-                      <ListItem
-                        key={item.label}
-                        {...item}
-                        onClick={() => setIsMobileMenuOpen(false)}
-                      />
-                    ))}
+                    {list.items.map((item) => {
+                      const category =
+                        list.label.toLowerCase() as keyof typeof CONFIG
+                      const href = `/${category}?type=${item.href}`
+
+                      return (
+                        <ListItem
+                          onClick={() => setIsMobileMenuOpen(false)}
+                          key={item.label}
+                          {...item}
+                          href={href}
+                        />
+                      )
+                    })}
                   </ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>
@@ -101,13 +108,20 @@ export function AppHeader() {
                   </AccordionTrigger>
                   <AccordionContent>
                     <ul className="space-y-2">
-                      {list.items.map((item) => (
-                        <ListItem
-                          key={item.label}
-                          {...item}
-                          onClick={() => setIsMobileMenuOpen(false)}
-                        />
-                      ))}
+                      {list.items.map((item) => {
+                        const category =
+                          list.label.toLowerCase() as keyof typeof CONFIG
+                        const href = `/${category}?type=${item.href}`
+
+                        return (
+                          <ListItem
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            key={item.label}
+                            {...item}
+                            href={href}
+                          />
+                        )
+                      })}
                     </ul>
                   </AccordionContent>
                 </AccordionItem>
@@ -146,7 +160,7 @@ function ListItem(props: ListItemProps) {
     <li key={label} className="group relative">
       <Link
         onClick={comingSoon ? undefined : onClick}
-        href={comingSoon ? "" : `/convert?type=${href}`}
+        href={comingSoon ? "" : href}
         className={cn(
           "hover:text-primary focus:text-primary hover:bg-accent focus:bg-accent flex flex-col gap-1 rounded-sm p-2 transition-all outline-none",
           isActive && "text-primary",

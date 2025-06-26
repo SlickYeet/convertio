@@ -42,7 +42,7 @@ export default function Options() {
               } = item
 
               const category = list.label.toLowerCase() as keyof typeof CONFIG
-              const href = `/${category}/${hrefFromProps}`
+              const href = `/${category}?type=${hrefFromProps}`
 
               return (
                 <Card
