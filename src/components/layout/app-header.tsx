@@ -53,14 +53,13 @@ export function AppHeader() {
                     {list.items.map((item) => {
                       const category =
                         list.label.toLowerCase() as keyof typeof CONFIG
-                      const href = `/${category}?type=${item.href}`
 
                       return (
                         <ListItem
                           onClick={() => setIsMobileMenuOpen(false)}
                           key={item.label}
+                          category={category}
                           {...item}
-                          href={href}
                         />
                       )
                     })}
@@ -111,14 +110,13 @@ export function AppHeader() {
                       {list.items.map((item) => {
                         const category =
                           list.label.toLowerCase() as keyof typeof CONFIG
-                        const href = `/${category}?type=${item.href}`
 
                         return (
                           <ListItem
                             onClick={() => setIsMobileMenuOpen(false)}
                             key={item.label}
+                            category={category}
                             {...item}
-                            href={href}
                           />
                         )
                       })}
@@ -145,6 +143,7 @@ export function AppHeader() {
 }
 
 interface ListItemProps extends ConfigItem {
+  category: keyof typeof CONFIG
   onClick?: () => void
 }
 
@@ -152,7 +151,15 @@ function ListItem(props: ListItemProps) {
   const searchParams = useSearchParams()
   const type = searchParams.get("type")
 
-  const { label, href, description, icon: Icon, comingSoon, onClick } = props
+  const {
+    label,
+    href,
+    description,
+    icon: Icon,
+    comingSoon,
+    category,
+    onClick,
+  } = props
 
   const isActive = type === href
 
@@ -160,7 +167,7 @@ function ListItem(props: ListItemProps) {
     <li key={label} className="group relative">
       <Link
         onClick={comingSoon ? undefined : onClick}
-        href={comingSoon ? "" : href}
+        href={comingSoon ? "" : `/${category}?type=${href}`}
         className={cn(
           "hover:text-primary focus:text-primary hover:bg-accent focus:bg-accent flex flex-col gap-1 rounded-sm p-2 transition-all outline-none",
           isActive && "text-primary",
