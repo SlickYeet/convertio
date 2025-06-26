@@ -82,7 +82,7 @@ export function PDFViewer(props: PDFViewerProps) {
   if (error) return <ErrorAlert error={error} />
 
   return (
-    <Card className={cn("@container max-w-full", className)} ref={containerRef}>
+    <Card ref={containerRef} className={cn("@container max-w-full", className)}>
       <div className="flex items-start justify-between pr-6">
         <CardHeader className="flex-1">
           <CardTitle className="flex items-center gap-2">

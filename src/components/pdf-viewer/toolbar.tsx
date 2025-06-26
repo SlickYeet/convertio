@@ -46,10 +46,11 @@ export function Toolbar(props: ToolbarProps) {
           <Button
             disabled={currentPage <= 1}
             onClick={handlePrevPage}
-            size="sm"
+            size="icon"
             variant="outline"
           >
             <ChevronLeft className="size-4" />
+            <span className="sr-only">Previous Page</span>
           </Button>
           <span className="px-2 text-sm font-medium">
             {currentPage} / {totalPages}
@@ -57,10 +58,11 @@ export function Toolbar(props: ToolbarProps) {
           <Button
             disabled={currentPage >= totalPages}
             onClick={handleNextPage}
-            size="sm"
+            size="icon"
             variant="outline"
           >
             <ChevronRight className="size-4" />
+            <span className="sr-only">Next Page</span>
           </Button>
         </div>
 
@@ -71,10 +73,11 @@ export function Toolbar(props: ToolbarProps) {
           <Button
             disabled={scale <= 0.5}
             onClick={handleZoomOut}
-            size="sm"
+            size="icon"
             variant="outline"
           >
             <ZoomOut className="size-4" />
+            <span className="sr-only">Zoom Out</span>
           </Button>
           <span className="min-w-[60px] px-2 text-center text-sm font-medium">
             {Math.round(scale * 100)}%
@@ -82,10 +85,11 @@ export function Toolbar(props: ToolbarProps) {
           <Button
             disabled={scale >= 3.0}
             onClick={handleZoomIn}
-            size="sm"
+            size="icon"
             variant="outline"
           >
             <ZoomIn className="size-4" />
+            <span className="sr-only">Zoom In</span>
           </Button>
         </div>
 
@@ -93,16 +97,23 @@ export function Toolbar(props: ToolbarProps) {
 
         <div className="flex items-center justify-between gap-2">
           {/* Rotate */}
-          <Button onClick={handleRotate} size="sm" variant="outline">
+          <Button onClick={handleRotate} size="icon" variant="outline">
             <RotateCw className="size-4" />
+            <span className="sr-only">Rotate</span>
           </Button>
 
           {/* Fullscreen */}
-          <Button onClick={handleFullscreen} size="sm" variant="outline">
+          <Button onClick={handleFullscreen} size="icon" variant="outline">
             {isFullscreen ? (
-              <Minimize2 className="size-4" />
+              <>
+                <Minimize2 className="size-4" />
+                <span className="sr-only">Exit Fullscreen</span>
+              </>
             ) : (
-              <Maximize2 className="size-4" />
+              <>
+                <Maximize2 className="size-4" />
+                <span className="sr-only">Enter Fullscreen</span>
+              </>
             )}
           </Button>
         </div>
