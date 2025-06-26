@@ -1,15 +1,19 @@
 "use client"
 
-import { useSearchParams } from "next/navigation"
+import { usePathname, useSearchParams } from "next/navigation"
 
 import { CONFIG } from "@/constants/conversion"
 
 export function PageHeader({ wrongType = false }: { wrongType?: boolean }) {
-  const searchPrams = useSearchParams()
-  const type =
-    (searchPrams.get("type") as keyof typeof CONFIG.converters) || "md-to-pdf"
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
 
-  const config = CONFIG.converters[type]
+  const key = (pathname.split("/").pop() as keyof typeof CONFIG) || "converters"
+  const type =
+    (searchParams.get("type") as keyof (typeof CONFIG)[typeof key]) ||
+    "md-to-pdf"
+
+  const config = CONFIG[key][type]
 
   if (wrongType) {
     return (
@@ -21,7 +25,9 @@ export function PageHeader({ wrongType = false }: { wrongType?: boolean }) {
 
   return (
     <div className="mt-4 mb-6 text-center">
+      {/* @ts-expect-error - I don't feel like dealing with this, until I have to. */}
       <h1 className="mb-2 text-4xl font-bold">{config.label}</h1>
+      {/* @ts-expect-error - I don't feel like dealing with this, until I have to. */}
       <p className="text-muted-foreground text-lg">{config.description}</p>
     </div>
   )

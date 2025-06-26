@@ -49,7 +49,8 @@ export default function ConvertSingleFile(props: ConvertSingleFileProps) {
     setActiveTab,
   } = props
 
-  const config = CONFIG.converters[currentType]
+  const config =
+    CONFIG.converters[currentType as keyof typeof CONFIG.converters]
   const inputLabel = config.inputLabel
   const fileTypes = config.fileTypes.join(" or ")
 

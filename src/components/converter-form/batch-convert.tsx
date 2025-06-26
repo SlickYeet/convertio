@@ -60,7 +60,8 @@ export function ConvertBatchFiles(props: ConvertBatchFilesProps) {
     setBatchProgress,
   } = props
 
-  const config = CONFIG.converters[currentType]
+  const config =
+    CONFIG.converters[currentType as keyof typeof CONFIG.converters]
   const inputLabel = config.inputLabel
   const fileTypes = config.fileTypes.join(" or ")
 

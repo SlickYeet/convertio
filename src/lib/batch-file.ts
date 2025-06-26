@@ -13,7 +13,8 @@ export async function convertBatchFile(
 ): Promise<BatchFile> {
   const { file, setBatchFiles, currentType } = props
 
-  const config = CONFIG.converters[currentType]
+  const config =
+    CONFIG.converters[currentType as keyof typeof CONFIG.converters]
   const apiEndpoint = config.apiEndpoint
   const inputType = config.fileTypes[0].replace(/^\./, "")
 

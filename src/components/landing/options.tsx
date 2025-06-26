@@ -1,5 +1,3 @@
-import { FileText } from "lucide-react"
-
 import ButtonWithAnimatedArrow from "@/components/button-with-animated-arrow"
 import { Badge } from "@/components/ui/badge"
 import {
@@ -66,11 +64,7 @@ export default function Options() {
                   <CardHeader className="pb-4">
                     <div className="mb-2 flex items-center gap-3">
                       <div className="bg-primary/10 text-primary rounded-lg p-2">
-                        {Icon ? (
-                          <Icon className="size-6" />
-                        ) : (
-                          <FileText className="size-6" />
-                        )}
+                        <Icon className="size-6" />
                       </div>
                       <CardTitle className="text-xl capitalize">
                         {label}

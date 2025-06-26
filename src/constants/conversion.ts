@@ -1,74 +1,91 @@
-import { Code, Diff, File, LucideIcon, Text } from "lucide-react"
+import {
+  Binary,
+  Code,
+  Diff,
+  File,
+  FileText,
+  LucideIcon,
+  Text,
+} from "lucide-react"
 
-export const CONFIG: ConfigList = {
+export const CONFIG = {
   converters: {
     "md-to-pdf": {
       label: "Markdown to PDF Converter",
-      href: "md-to-pdf",
+      href: "md-to-pdf" as const,
       description: "Convert Markdown files to PDF documents.",
       inputLabel: "markdown file",
       fileTypes: [".md", ".txt"],
       mimeTypes: ["text/markdown", "text/plain"],
       apiEndpoint: "/api/convert/md-to-pdf",
+      icon: FileText,
       popular: true,
+      comingSoon: false,
     },
     "html-to-pdf": {
       label: "HTML to PDF Converter",
-      href: "html-to-pdf",
+      href: "html-to-pdf" as const,
       description: "Convert HTML files to PDF documents.",
       inputLabel: "HTML file",
       fileTypes: [".html", ".htm"],
       mimeTypes: ["text/html"],
       apiEndpoint: "/api/convert/html-to-pdf",
       icon: Code,
+      popular: false,
+      comingSoon: false,
     },
     "text-to-pdf": {
       label: "Text to PDF Converter",
-      href: "text-to-pdf",
+      href: "text-to-pdf" as const,
       description: "Convert plain text files to PDF format.",
       inputLabel: "text file",
       fileTypes: [".txt"],
       mimeTypes: ["text/plain"],
       apiEndpoint: "/api/convert/text-to-pdf",
       icon: File,
+      popular: false,
       comingSoon: true,
     },
   },
   tools: {
     "text-diff": {
       label: "Text Diff Tool",
-      href: "text-diff",
+      href: "text-diff" as const,
       description: "Compare two text files and highlight differences.",
       inputLabel: "Text Files",
       fileTypes: [".txt"],
       mimeTypes: ["text/plain"],
-      apiEndpoint: "/api/tools/text-diff",
+      apiEndpoint: "",
       icon: Diff,
-      comingSoon: true,
+      popular: false,
+      comingSoon: false,
     },
     "markdown-editor": {
       label: "Markdown Editor",
-      href: "markdown-editor",
+      href: "markdown-editor" as const,
       description: "Preview Markdown files in real-time as you edit.",
       inputLabel: "Markdown File",
       fileTypes: [".md", ".txt"],
       mimeTypes: ["text/markdown", "text/plain"],
       apiEndpoint: "/api/tools/markdown-editor",
       icon: Text,
+      popular: false,
       comingSoon: true,
     },
   },
   utilities: {
     "byte-calculator": {
       label: "Byte Calculator",
-      href: "byte-calculator",
+      href: "byte-calculator" as const,
       description: "Convert between different byte units (KB, MB, GB, etc.).",
       inputLabel: "Bytes",
       apiEndpoint: "/api/utils/byte-calculator",
+      icon: Binary,
+      popular: false,
       comingSoon: true,
     },
   },
-}
+} satisfies ConfigList
 
 export const CONFIG_LIST = [
   {
@@ -85,7 +102,7 @@ export const CONFIG_LIST = [
   },
 ]
 
-type ConfigList = {
+export type ConfigList = {
   converters: { [key: string]: ConverterConfig }
   tools: { [key: string]: ToolConfig }
   utilities: { [key: string]: UtilityConfig }
@@ -110,7 +127,7 @@ type ConverterConfig = ConfigItem & {
 type ToolConfig = ConfigItem & {
   fileTypes?: string[]
   mimeTypes?: string[]
-  apiEndpoint: string
+  apiEndpoint?: string
 }
 
 type UtilityConfig = ConfigItem & {

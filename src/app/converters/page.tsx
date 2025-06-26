@@ -3,13 +3,15 @@ import { PageHeader } from "@/components/layout/page-header"
 import { CONFIG } from "@/constants/conversion"
 import type { CurrentType } from "@/types"
 
-interface ConvertPageProps {
+interface ConvertersPageProps {
   searchParams: Promise<{
     type?: string
   }>
 }
 
-export default async function ConvertPage({ searchParams }: ConvertPageProps) {
+export default async function ConvertersPage({
+  searchParams,
+}: ConvertersPageProps) {
   const { type } = (await searchParams) || "md-to-pdf"
 
   let wrongType = false

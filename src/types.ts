@@ -1,17 +1,19 @@
 import { CONFIG } from "@/constants/conversion"
-import { SAMPLE_CONTENT } from "@/constants/sample"
 
-export type CurrentType = keyof typeof SAMPLE_CONTENT
+export type CurrentType =
+  | (typeof CONFIG.converters)[keyof typeof CONFIG.converters]["href"]
+  | (typeof CONFIG.tools)[keyof typeof CONFIG.tools]["href"]
+  | (typeof CONFIG.utilities)[keyof typeof CONFIG.utilities]["href"]
 
 /**
- * !This type is ironically not creating typesafety, so do not assign a value manually.
- *
- * !Always use `CONFIG.converters` to ensure the type is correct.
+ * Represents the input type for a converter, or tool.
  *
  * @example
  * const inputType = config.fileTypes[0].replace(/^\./, "")
  */
-export type InputType = (typeof CONFIG.converters)[CurrentType]["fileTypes"][0]
+export type InputType =
+  | (typeof CONFIG.converters)[keyof typeof CONFIG.converters]["fileTypes"][0]
+  | (typeof CONFIG.tools)[keyof typeof CONFIG.tools]["fileTypes"][0]
 
 export type BatchFile = {
   id: string

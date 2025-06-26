@@ -32,7 +32,8 @@ export function FileUpload(props: FileUploadProps) {
 
   const [isDragOver, setIsDragOver] = useState<boolean>(false)
 
-  const config = CONFIG.converters[currentType]
+  const config =
+    CONFIG.converters[currentType as keyof typeof CONFIG.converters]
   const fileTypes = config.fileTypes.join(" or ")
 
   const handleFileUpload = useCallback(

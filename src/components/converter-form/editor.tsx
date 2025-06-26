@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { CONFIG } from "@/constants/conversion"
 import { convert } from "@/lib/conversion"
-import type { CurrentType } from "@/types"
+import type { CurrentType, InputType } from "@/types"
 
 interface EditorProps {
   input: string
@@ -28,9 +28,9 @@ export function Editor(props: EditorProps) {
   const [isCoping, setIsCoping] = useState<boolean>(false)
   const [isCopied, setIsCopied] = useState<boolean>(false)
 
-  const config = CONFIG.converters[type]
+  const config = CONFIG.converters[type as keyof typeof CONFIG.converters]
   const apiEndpoint = config.apiEndpoint
-  const inputType = config.fileTypes[0].replace(/^\./, "")
+  const inputType = config.fileTypes[0].replace(/^\./, "") as InputType
 
   const {
     input,

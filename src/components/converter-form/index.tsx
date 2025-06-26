@@ -9,7 +9,7 @@ import { SAMPLE_CONTENT } from "@/constants/sample"
 import type { BatchFile, CurrentType } from "@/types"
 
 export function ConverterForm({ currentType }: { currentType: CurrentType }) {
-  const sampleInput = SAMPLE_CONTENT[currentType]
+  const sampleInput = SAMPLE_CONTENT[currentType as keyof typeof SAMPLE_CONTENT]
 
   const [conversionMode, setConversionMode] = useState<"single" | "batch">(
     "single",

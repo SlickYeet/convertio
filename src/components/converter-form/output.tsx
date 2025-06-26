@@ -19,7 +19,8 @@ interface OutputProps {
 export function Output(props: OutputProps) {
   const { input, isConverted, pdfBlob, currentType } = props
 
-  const config = CONFIG.converters[currentType]
+  const config =
+    CONFIG.converters[currentType as keyof typeof CONFIG.converters]
   const inputLabel = config.inputLabel
   const fileType = config.fileTypes[0]
   const mimeType = config.mimeTypes[0]
