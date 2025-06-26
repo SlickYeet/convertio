@@ -59,7 +59,7 @@ export function TextDiffViewer(props: TextDiffViewerProps) {
 
   return (
     <>
-      <Card>
+      <Card className="rounded-b-none border-b-0">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 capitalize">
             <Diff className="size-5" />
@@ -67,7 +67,7 @@ export function TextDiffViewer(props: TextDiffViewerProps) {
           </CardTitle>
           <CardDescription>{config.description}</CardDescription>
         </CardHeader>
-        <CardContent className="mb-6 flex gap-6">
+        <CardContent className="flex gap-6">
           <div className="flex-1">
             <Label className="mb-2">Old Text</Label>
             <div className="group relative">
@@ -98,7 +98,7 @@ export function TextDiffViewer(props: TextDiffViewerProps) {
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="rounded-t-none border-t-0">
         <div className="flex items-center justify-between pr-6">
           <CardHeader className="flex-1">
             <CardTitle>Difference</CardTitle>
