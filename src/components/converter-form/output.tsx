@@ -29,7 +29,7 @@ export function Output(props: OutputProps) {
       return
     }
     const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, "-")
-    downloadFile(pdfBlob, `document-${timestamp}.pdf`)
+    downloadFile(pdfBlob, `converted-${timestamp}.pdf`)
   }
 
   function downloadOriginal() {
@@ -39,15 +39,15 @@ export function Output(props: OutputProps) {
       })
       return
     }
+    const config = CONFIG.converters[currentType]
+    const fileType = config.fileTypes[0]
+    const mimeType = config.mimeTypes[0]
+
     const blob = new Blob([input], {
-      type:
-        currentType === "md-to-pdf"
-          ? "text/markdown"
-          : currentType === "html-to-pdf"
-            ? "text/html"
-            : "text/plain",
+      type: mimeType,
     })
-    downloadFile(blob, `document.${currentType}`)
+    const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, "-")
+    downloadFile(blob, `converted-${timestamp}${fileType}`)
   }
 
   return (

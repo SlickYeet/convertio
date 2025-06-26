@@ -20,11 +20,7 @@ export default async function ConvertPage({ searchParams }: ConvertPageProps) {
   return (
     <>
       <PageHeader wrongType={wrongType} />
-      {!wrongType && (
-        <div className="grid gap-6 lg:grid-cols-2">
-          <ConverterForm currentType={type as CurrentType} />
-        </div>
-      )}
+      {!wrongType && <ConverterForm currentType={type as CurrentType} />}
     </>
   )
 }

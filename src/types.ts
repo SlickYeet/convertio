@@ -14,3 +14,13 @@ export type CurrentType = keyof typeof SAMPLE_CONTENT
 export type InputType = (typeof CONFIG.converters)[CurrentType]["fileTypes"][0]
 
 export type OutputType = "pdf"
+
+export type BatchFile = {
+  id: string
+  file: File
+  content: string
+  status: "pending" | "converting" | "completed" | "error"
+  progress: number
+  pdfBlob?: Blob
+  error?: string
+}

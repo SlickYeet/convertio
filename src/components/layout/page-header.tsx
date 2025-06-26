@@ -13,14 +13,14 @@ export function PageHeader({ wrongType = false }: { wrongType?: boolean }) {
 
   if (wrongType) {
     return (
-      <div className="mb-8 text-center">
+      <div className="mt-4 mb-6 text-center">
         <h1 className="mb-2 text-4xl font-bold">Invalid conversion type</h1>
       </div>
     )
   }
 
   return (
-    <div className="mb-8 text-center">
+    <div className="mt-4 mb-6 text-center">
       <h1 className="mb-2 text-4xl font-bold">{config.label}</h1>
       <p className="text-muted-foreground text-lg">{config.description}</p>
     </div>

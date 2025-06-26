@@ -93,11 +93,7 @@ export function AppHeader() {
               </SheetDescription>
             </SheetHeader>
 
-            <Accordion
-              type="multiple"
-              defaultValue={["converters"]}
-              className="w-full"
-            >
+            <Accordion type="multiple" className="w-full">
               {CONFIG_LIST.map((list) => (
                 <AccordionItem key={list.label} value={list.label}>
                   <AccordionTrigger className="capitalize">

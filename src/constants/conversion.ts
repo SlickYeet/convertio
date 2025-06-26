@@ -95,7 +95,7 @@ export type ConfigItem = {
   label: string
   href: string
   description: string
-  inputLabel?: string
+  inputLabel: string
   icon?: LucideIcon
   popular?: boolean
   comingSoon?: boolean

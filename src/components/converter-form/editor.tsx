@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { CONFIG } from "@/constants/conversion"
 import { convert } from "@/lib/conversion"
+import type { CurrentType } from "@/types"
 
 interface EditorProps {
   input: string
@@ -21,14 +22,13 @@ interface EditorProps {
 
 export function Editor(props: EditorProps) {
   const searchParams = useSearchParams()
-  const type = searchParams.get("type") || "md-to-pdf"
+  const type = (searchParams.get("type") || "md-to-pdf") as CurrentType
 
   const [isConverting, setIsConverting] = useState<boolean>(false)
   const [isCoping, setIsCoping] = useState<boolean>(false)
   const [isCopied, setIsCopied] = useState<boolean>(false)
 
   const config = CONFIG.converters[type]
-  // Get the input type without the leading dot
   const apiEndpoint = config.apiEndpoint
   const inputType = config.fileTypes[0].replace(/^\./, "")
   const outputType = "pdf"
@@ -42,10 +42,10 @@ export function Editor(props: EditorProps) {
     setActiveTab,
   } = props
 
-  async function handleConvert() {
+  async function handleSingleConvert() {
     if (!input.trim()) {
       toast.error("Error", {
-        description: `Please enter some ${inputType} content to convert.`,
+        description: `Enter some ${inputType} content to start converting`,
       })
       return
     }
@@ -117,7 +117,7 @@ export function Editor(props: EditorProps) {
 
       <div className="flex gap-2">
         <Button
-          onClick={handleConvert}
+          onClick={handleSingleConvert}
           disabled={!input.trim() || isConverting}
           className="flex-1"
         >

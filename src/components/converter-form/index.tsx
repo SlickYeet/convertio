@@ -1,43 +1,38 @@
 "use client"
 
-import { AlertCircle, CheckCircle, FileText } from "lucide-react"
 import { useEffect, useState } from "react"
 
-import { Editor } from "@/components/converter-form/editor"
-import { FileUpload } from "@/components/converter-form/file-upload"
-import { Output } from "@/components/converter-form/output"
-import { Preview } from "@/components/converter-form/preview"
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { CONFIG } from "@/constants/conversion"
+import { ConvertBatchFiles } from "@/components/converter-form/batch-convert"
+import { ConversionModeToggle } from "@/components/converter-form/mode-toggle"
+import ConvertSingleFile from "@/components/converter-form/single-file"
 import { SAMPLE_CONTENT } from "@/constants/sample"
-import type { CurrentType } from "@/types"
+import type { BatchFile, CurrentType } from "@/types"
 
 export function ConverterForm({ currentType }: { currentType: CurrentType }) {
   const sampleInput = SAMPLE_CONTENT[currentType]
 
+  const [conversionMode, setConversionMode] = useState<"single" | "batch">(
+    "batch",
+  )
+  const [activeTab, setActiveTab] = useState<string>("preview")
+  // Single file conversion stat
   const [input, setInput] = useState<string>(sampleInput)
   const [isConverted, setIsConverted] = useState<boolean>(false)
   const [error, setError] = useState<string | null>(null)
   const [pdfBlob, setPdfBlob] = useState<Blob | null>(null)
-  const [activeTab, setActiveTab] = useState<string>("preview")
-
-  const config = CONFIG.converters[currentType]
-  const inputLabel = config.inputLabel
-  const fileTypes = config.fileTypes.join(", or ")
+  // Batch conversion state
+  const [batchFiles, setBatchFiles] = useState<BatchFile[]>([])
+  const [isBatchConverting, setIsBatchConverting] = useState<boolean>(false)
+  const [batchProgress, setBatchProgress] = useState<number>(0)
 
   useEffect(() => {
     setInput(sampleInput)
     setIsConverted(false)
     setError(null)
     setPdfBlob(null)
+    setBatchFiles([])
+    setBatchProgress(0)
+    setIsBatchConverting(false)
     /**
      * It does not make sense to include `sampleInput` in the dependency array
      * because it is a static constant value.
@@ -46,93 +41,45 @@ export function ConverterForm({ currentType }: { currentType: CurrentType }) {
   }, [currentType])
 
   return (
-    <>
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 capitalize">
-            <FileText className="size-5" />
-            Input {inputLabel}
-          </CardTitle>
-          <CardDescription>
-            Paste your {inputLabel} content or upload a {fileTypes} file
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <FileUpload
-            setInput={setInput}
-            setIsConverted={setIsConverted}
-            setError={setError}
-            setPdfBlob={setPdfBlob}
-            currentType={currentType}
-          />
+    <div className="flex flex-col">
+      <ConversionModeToggle
+        conversionMode={conversionMode}
+        setConversionMode={setConversionMode}
+      />
 
-          {error && (
-            <Alert variant="destructive">
-              <AlertCircle className="size-4" />
-              <AlertDescription>{error}</AlertDescription>
-            </Alert>
-          )}
+      {conversionMode === "single" && (
+        <ConvertSingleFile
+          currentType={currentType}
+          conversionMode="single"
+          input={input}
+          error={error}
+          isConverted={isConverted}
+          activeTab={activeTab}
+          pdfBlob={pdfBlob}
+          setInput={setInput}
+          setIsConverted={setIsConverted}
+          setError={setError}
+          setPdfBlob={setPdfBlob}
+          setActiveTab={setActiveTab}
+        />
+      )}
 
-          <Editor
-            input={input}
-            setInput={setInput}
-            setIsConverted={setIsConverted}
-            setError={setError}
-            setPdfBlob={setPdfBlob}
-            setActiveTab={setActiveTab}
-          />
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            {isConverted ? (
-              <>
-                <CheckCircle className="size-4 text-emerald-600" />
-                Conversion Complete
-              </>
-            ) : (
-              <>
-                <FileText className="size-4" />
-                Preview & Output
-              </>
-            )}
-          </CardTitle>
-          <CardDescription>
-            {isConverted
-              ? "Your PDF is ready for download"
-              : `Live preview of your ${inputLabel} content`}
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Tabs
-            value={activeTab}
-            onValueChange={(t) => setActiveTab(t)}
-            className="w-full"
-          >
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="preview">Preview</TabsTrigger>
-              <TabsTrigger disabled={!isConverted} value="output">
-                Output
-              </TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="preview" className="mt-4">
-              <Preview input={input} currentType={currentType} />
-            </TabsContent>
-
-            <TabsContent value="output" className="mt-4">
-              <Output
-                input={input}
-                isConverted={isConverted}
-                pdfBlob={pdfBlob}
-                currentType={currentType}
-              />
-            </TabsContent>
-          </Tabs>
-        </CardContent>
-      </Card>
-    </>
+      {conversionMode === "batch" && (
+        <ConvertBatchFiles
+          currentType={currentType}
+          conversionMode="batch"
+          error={error}
+          isConverted={isConverted}
+          batchFiles={batchFiles}
+          isBatchConverting={isBatchConverting}
+          batchProgress={batchProgress}
+          setError={setError}
+          setIsConverted={setIsConverted}
+          setBatchFiles={setBatchFiles}
+          setIsBatchConverting={setIsBatchConverting}
+          setBatchProgress={setBatchProgress}
+        />
+      )}
+    </div>
   )
 }
