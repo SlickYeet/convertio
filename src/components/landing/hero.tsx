@@ -35,7 +35,7 @@ export default function Hero() {
 
         <ButtonWithAnimatedArrow
           label="Get Started Free"
-          href="/convert?type=md-to-pdf"
+          href="/converters?type=md-to-pdf"
         />
       </div>
     </section>
