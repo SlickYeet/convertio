@@ -181,7 +181,7 @@ export function ConvertBatchFiles(props: ConvertBatchFilesProps) {
 
           {error && <ErrorAlert error={error} />}
 
-          <div className="flex gap-2">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
             <Button
               disabled={
                 batchFiles.length === 0 ||
@@ -216,25 +216,29 @@ export function ConvertBatchFiles(props: ConvertBatchFilesProps) {
                 </>
               )}
             </Button>
-            <Button
-              disabled={
-                batchFiles.filter((f) => f.status === "completed").length === 0
-              }
-              onClick={downloadAllBatchFiles}
-              variant="outline"
-            >
-              <Download className="size-4" />
-              Download All (
-              {batchFiles.filter((f) => f.status === "completed").length})
-            </Button>
-            <Button
-              disabled={batchFiles.length === 0}
-              onClick={clearBatchFiles}
-              size="icon"
-              variant="destructive"
-            >
-              <Trash2 className="size-4" />
-            </Button>
+            <div className="flex items-center gap-2">
+              <Button
+                disabled={
+                  batchFiles.filter((f) => f.status === "completed").length ===
+                  0
+                }
+                onClick={downloadAllBatchFiles}
+                variant="outline"
+                className="flex-1 sm:flex-none"
+              >
+                <Download className="size-4" />
+                Download All (
+                {batchFiles.filter((f) => f.status === "completed").length})
+              </Button>
+              <Button
+                disabled={batchFiles.length === 0}
+                onClick={clearBatchFiles}
+                size="icon"
+                variant="destructive"
+              >
+                <Trash2 className="size-4" />
+              </Button>
+            </div>
           </div>
 
           <div className="space-y-2">
