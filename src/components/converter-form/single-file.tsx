@@ -1,12 +1,12 @@
 "use client"
 
-import { AlertCircle, CheckCircle, FileText } from "lucide-react"
+import { CheckCircle, FileText } from "lucide-react"
 
 import { Editor } from "@/components/converter-form/editor"
 import { FileUpload } from "@/components/converter-form/file-upload"
 import { Output } from "@/components/converter-form/output"
 import { Preview } from "@/components/converter-form/preview"
-import { Alert, AlertDescription } from "@/components/ui/alert"
+import ErrorAlert from "@/components/error-alert"
 import {
   Card,
   CardContent,
@@ -75,12 +75,7 @@ export default function ConvertSingleFile(props: ConvertSingleFileProps) {
             conversionMode={conversionMode}
           />
 
-          {error && (
-            <Alert variant="destructive">
-              <AlertCircle className="size-4" />
-              <AlertDescription>{error}</AlertDescription>
-            </Alert>
-          )}
+          {error && <ErrorAlert error={error} />}
 
           <Editor
             input={input}

@@ -1,6 +1,7 @@
 import { CheckCircle, Download, FileText } from "lucide-react"
 import { toast } from "sonner"
 
+import { PDFViewer } from "@/components/pdf-viewer"
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Separator } from "@/components/ui/separator"
@@ -65,6 +66,13 @@ export function Output(props: OutputProps) {
               Your {inputLabel} has been converted to PDF format.
             </p>
           </div>
+
+          {pdfBlob && (
+            <PDFViewer
+              pdfBlob={pdfBlob}
+              filename={`${currentType}-document-${new Date().toISOString().slice(0, 19).replace(/:/g, "-")}.pdf`}
+            />
+          )}
 
           <Separator />
 

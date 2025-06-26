@@ -13,8 +13,8 @@ import {
 import { toast } from "sonner"
 
 import { FileUpload } from "@/components/converter-form/file-upload"
+import ErrorAlert from "@/components/error-alert"
 import { Hint } from "@/components/hint"
-import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -178,12 +178,7 @@ export function ConvertBatchFiles(props: ConvertBatchFilesProps) {
             setBatchFiles={setBatchFiles}
           />
 
-          {error && (
-            <Alert variant="destructive">
-              <AlertCircle className="size-4" />
-              <AlertDescription>{error}</AlertDescription>
-            </Alert>
-          )}
+          {error && <ErrorAlert error={error} />}
 
           <div className="flex gap-2">
             <Button
