@@ -21,6 +21,12 @@ export function Output(props: OutputProps) {
 
   const config = CONFIG.converters[currentType]
   const inputLabel = config.inputLabel
+  const fileType = config.fileTypes[0]
+  const mimeType = config.mimeTypes[0]
+
+  const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, "-")
+  const name = mimeType.slice(mimeType.indexOf("/") + 1)
+  const filename = `${name}-document-${new Date().toISOString().slice(0, 19).replace(/:/g, "-")}.pdf`
 
   function downloadPDF() {
     if (!pdfBlob) {
@@ -29,8 +35,7 @@ export function Output(props: OutputProps) {
       })
       return
     }
-    const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, "-")
-    downloadFile(pdfBlob, `converted-${timestamp}.pdf`)
+    downloadFile(pdfBlob, filename)
   }
 
   function downloadOriginal() {
@@ -40,14 +45,10 @@ export function Output(props: OutputProps) {
       })
       return
     }
-    const config = CONFIG.converters[currentType]
-    const fileType = config.fileTypes[0]
-    const mimeType = config.mimeTypes[0]
 
     const blob = new Blob([input], {
       type: mimeType,
     })
-    const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, "-")
     downloadFile(blob, `converted-${timestamp}${fileType}`)
   }
 
@@ -67,12 +68,7 @@ export function Output(props: OutputProps) {
             </p>
           </div>
 
-          {pdfBlob && (
-            <PDFViewer
-              pdfBlob={pdfBlob}
-              filename={`${currentType}-document-${new Date().toISOString().slice(0, 19).replace(/:/g, "-")}.pdf`}
-            />
-          )}
+          {pdfBlob && <PDFViewer pdfBlob={pdfBlob} filename={filename} />}
 
           <Separator />
 

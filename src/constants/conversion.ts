@@ -13,7 +13,7 @@ export const CONFIG: ConfigList = {
       popular: true,
     },
     "html-to-pdf": {
-      label: "Markdown to HTML Converter",
+      label: "HTML to PDF Converter",
       href: "html-to-pdf",
       description: "Convert HTML files to PDF documents.",
       inputLabel: "HTML file",

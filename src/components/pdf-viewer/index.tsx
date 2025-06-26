@@ -8,6 +8,7 @@ import "react-pdf/dist/esm/Page/AnnotationLayer.css"
 import "react-pdf/dist/esm/Page/TextLayer.css"
 
 import ErrorAlert from "@/components/error-alert"
+import { Hint } from "@/components/hint"
 import { Toolbar } from "@/components/pdf-viewer/toolbar"
 import { Button } from "@/components/ui/button"
 import {
@@ -104,18 +105,24 @@ export function PDFViewer(props: PDFViewerProps) {
           </CardDescription>
         </CardHeader>
 
-        <Button
-          onClick={() => setIsHidden(!isHidden)}
-          size="icon"
-          variant="ghost"
-          className={isFullscreen ? "hidden" : "flex"}
+        <Hint
+          label={isHidden ? "Show PDF Preview" : "Hide PDF preview"}
+          side="left"
+          asChild
         >
-          {isHidden ? (
-            <Eye className="size-4" />
-          ) : (
-            <EyeClosed className="size-4" />
-          )}
-        </Button>
+          <Button
+            onClick={() => setIsHidden(!isHidden)}
+            size="icon"
+            variant="ghost"
+            className={isFullscreen ? "hidden" : "flex"}
+          >
+            {isHidden ? (
+              <Eye className="size-4" />
+            ) : (
+              <EyeClosed className="size-4" />
+            )}
+          </Button>
+        </Hint>
       </div>
       <CardContent className={cn("h-full space-y-4", isHidden && "hidden")}>
         <Toolbar
