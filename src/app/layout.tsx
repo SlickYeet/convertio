@@ -1,14 +1,14 @@
 import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 
+import { DevIndicator } from "@/components/dev-indicator"
 import { AppHeader } from "@/components/layout/app-header"
 import { Footer } from "@/components/layout/footer"
 import { Providers } from "@/components/providers"
+import { siteConfig } from "@/config"
 import { cn } from "@/lib/utils"
 
 import "./globals.css"
-
-import { siteConfig } from "@/config"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -45,6 +45,7 @@ export default function RootLayout({
               </div>
             </div>
           </div>
+          <DevIndicator />
         </Providers>
       </body>
     </html>
