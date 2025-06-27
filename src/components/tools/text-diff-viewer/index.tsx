@@ -1,29 +1,19 @@
 "use client"
 
-import { Copy, Diff, Maximize2, Minimize2, Trash2 } from "lucide-react"
+import { Diff, Trash2 } from "lucide-react"
 import Prism from "prismjs"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { DiffMethod } from "react-diff-viewer"
 
 import { Hint } from "@/components/hint"
+import { DiffViewerHeader } from "@/components/tools/text-diff-viewer/card-header"
+import { CopyButton } from "@/components/tools/text-diff-viewer/copy-button"
 import { DiffViewer } from "@/components/tools/text-diff-viewer/diff-viewer"
+import { DiffViewerDrawer } from "@/components/tools/text-diff-viewer/drawer"
+import { DiffViewerToolbar } from "@/components/tools/text-diff-viewer/toolbar"
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import { Label } from "@/components/ui/label"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
-import { Switch } from "@/components/ui/switch"
+import { Card, CardContent } from "@/components/ui/card"
 import { Textarea } from "@/components/ui/textarea"
 import { CONFIG } from "@/constants/conversion"
 import { useIsMobile } from "@/hooks/use-mobile"
@@ -89,10 +79,20 @@ export function TextDiffViewer(props: TextDiffViewerProps) {
   const [highlightLines, setHighlightLines] = useState<string[]>([])
   const [syntaxLanguage, setSyntaxLanguage] = useState<string>("javascript")
   const [isFullscreen, setIsFullscreen] = useState(false)
+  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false)
 
   useEffect(() => {
     setSplitView(isMobile ? false : true)
   }, [isMobile])
+
+  useEffect(() => {
+    if (isFullscreen && isMobile) {
+      document.exitFullscreen()
+      setIsDrawerOpen(true)
+    } else if (!isMobile) {
+      setIsDrawerOpen(false)
+    }
+  }, [isFullscreen, isMobile])
 
   const onLineNumberClick = useCallback(
     (id: string, e: React.MouseEvent<HTMLTableCellElement>): void => {
@@ -122,11 +122,12 @@ export function TextDiffViewer(props: TextDiffViewerProps) {
     (str: string): React.JSX.Element => {
       if (!str) return <></>
 
-      let languageDef = Prism.languages[syntaxLanguage]
+      let languageDef =
+        window.Prism?.languages[syntaxLanguage] ||
+        Prism.languages[syntaxLanguage]
       if (!languageDef) {
         languageDef = Prism.languages.plain || Prism.languages.javascript
       }
-
       const highlightedHtml = Prism.highlight(str, languageDef, syntaxLanguage)
       return <span dangerouslySetInnerHTML={{ __html: highlightedHtml }} />
     },
@@ -134,35 +135,39 @@ export function TextDiffViewer(props: TextDiffViewerProps) {
   )
 
   function handleFullscreen() {
-    if (!isFullscreen) {
-      if (containerRef.current?.requestFullscreen) {
-        containerRef.current.requestFullscreen()
-        setIsFullscreen(true)
+    if (!isMobile) {
+      if (!isFullscreen) {
+        if (containerRef.current?.requestFullscreen) {
+          containerRef.current.requestFullscreen()
+          setIsFullscreen(true)
+        }
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen()
+          setIsFullscreen(false)
+        }
       }
     } else {
-      if (document.exitFullscreen) {
-        document.exitFullscreen()
-        setIsFullscreen(false)
-      }
+      setIsDrawerOpen((prev) => !prev)
+      setIsFullscreen((prev) => !prev)
     }
   }
 
-  if (!isMounted) {
-    return null
-  }
+  if (!isMounted) return null
 
   return (
     <>
       <Card className="rounded-b-none border-b-0">
         <div className="flex items-center justify-between pr-6">
-          <CardHeader className="flex-1">
-            <CardTitle className="flex items-center gap-2 capitalize">
-              <Diff className="size-5" />
-              {config.label}
-            </CardTitle>
-            <CardDescription>{config.description}</CardDescription>
-          </CardHeader>
-
+          <DiffViewerHeader
+            title={
+              <span className="flex items-center gap-2 capitalize">
+                <Diff className="size-5" />
+                {config.label}
+              </span>
+            }
+            description={config.description}
+          />
           {(oldText || newText) && (
             <Hint label="Clear Text" side="left" asChild>
               <Button
@@ -173,146 +178,106 @@ export function TextDiffViewer(props: TextDiffViewerProps) {
                 }}
                 size="icon"
                 variant="ghost"
-                className="hover:text-destructive text-muted-foreground"
+                className="text-muted-foreground hover:text-destructive"
+                aria-label="Clear Text"
               >
-                <Trash2 />
-                <span className="sr-only">Clear Text</span>
+                <Trash2 className="size-4" />
               </Button>
             </Hint>
           )}
         </div>
-        <CardContent className="flex flex-col gap-6 md:flex-row">
-          <div className="flex-1">
-            <Label className="mb-2">Old Text</Label>
-            <div className="group relative">
-              <Textarea
-                value={oldText}
-                onChange={(e) => setOldText(e.target.value)}
-                placeholder="Enter old text here..."
-                rows={15}
-                className="resize-none font-mono"
-              />
-              <CopyButton text={oldText} label="Copy Old Text" />
-            </div>
+        <CardContent className="mt-2 flex flex-col gap-6 md:flex-row">
+          <div className="group relative flex-1">
+            <Badge
+              variant="secondary"
+              className="border-input absolute top-0 right-3 -translate-y-1/2"
+            >
+              Old Text
+            </Badge>
+            <Textarea
+              value={oldText}
+              onChange={(e) => setOldText(e.target.value)}
+              placeholder="Enter old text here..."
+              rows={15}
+              className="resize-none font-mono"
+            />
+            <CopyButton text={oldText} label="Copy Old Text" />
           </div>
-
-          <div className="flex-1">
-            <Label className="mb-2">New Text</Label>
-            <div className="group relative">
-              <Textarea
-                value={newText}
-                onChange={(e) => setNewText(e.target.value)}
-                placeholder="Enter new text here..."
-                rows={15}
-                className="resize-none font-mono"
-              />
-              <CopyButton text={newText} label="Copy New Text" />
-            </div>
+          <div className="group relative flex-1">
+            <Badge
+              variant="secondary"
+              className="border-input absolute top-0 right-3 -translate-y-1/2"
+            >
+              New Text
+            </Badge>
+            <Textarea
+              value={newText}
+              onChange={(e) => setNewText(e.target.value)}
+              placeholder="Enter new text here..."
+              rows={15}
+              className="resize-none font-mono"
+            />
+            <CopyButton text={newText} label="Copy New Text" />
           </div>
         </CardContent>
       </Card>
-
       <Card ref={containerRef} className="@container rounded-t-none border-t-0">
         <div className="flex flex-col justify-between gap-y-4 pr-6 @sm:flex-row @sm:items-center">
-          <CardHeader className="flex-1">
-            <CardTitle>Difference</CardTitle>
-            <CardDescription>
-              {splitView ? "Side-by-Side View" : "Unified View"}
-            </CardDescription>
-          </CardHeader>
-          <div className="space-y-3 pl-6 @sm:px-0">
-            <div className="flex items-center gap-2">
-              <Switch
-                id="side-by-side"
-                checked={splitView}
-                onCheckedChange={setSplitView}
-              />
-              <Label htmlFor="side-by-side">Side-by-Side View</Label>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <Select
-                defaultValue={syntaxLanguage}
-                onValueChange={setSyntaxLanguage}
-              >
-                <SelectTrigger className="min-w-[150px] flex-1 @sm:flex-none">
-                  <SelectValue placeholder="Select Language" />
-                </SelectTrigger>
-                <SelectContent>
-                  {LANGUAGES.map((lang) => (
-                    <SelectItem
-                      key={lang.value}
-                      value={lang.value}
-                      className="capitalize"
-                    >
-                      {lang.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-
-              <Hint
-                label={isFullscreen ? "Exit Fullscreen" : "Fullscreen"}
-                side="top"
-                asChild
-              >
-                <Button
-                  onClick={handleFullscreen}
-                  size="icon"
-                  variant="outline"
-                >
-                  {isFullscreen ? (
-                    <>
-                      <Minimize2 className="size-4" />
-                      <span className="sr-only">Exit Fullscreen</span>
-                    </>
-                  ) : (
-                    <>
-                      <Maximize2 className="size-4" />
-                      <span className="sr-only">Enter Fullscreen</span>
-                    </>
-                  )}
-                </Button>
-              </Hint>
-            </div>
-          </div>
-        </div>
-        <CardContent
-          className={cn(
-            "overflow-y-auto break-all",
-            oldText || newText ? "h-full max-h-[calc(100dvh-10rem)]" : "hidden",
-          )}
-        >
-          <DiffViewer
-            oldValue={oldText}
-            newValue={newText}
+          <DiffViewerHeader
+            title="Difference"
+            description={splitView ? "Side-by-Side View" : "Unified View"}
+          />
+          <DiffViewerToolbar
             splitView={splitView}
-            hideLineNumbers={false}
-            showDiffOnly={false}
-            compareMethod={DiffMethod.WORDS}
+            setSplitView={setSplitView}
+            syntaxLanguage={syntaxLanguage}
+            setSyntaxLanguage={setSyntaxLanguage}
+            isFullscreen={isFullscreen}
+            handleFullscreen={handleFullscreen}
+            languages={LANGUAGES}
+          />
+        </div>
+        {isMobile ? (
+          <DiffViewerDrawer
+            open={isDrawerOpen}
+            onOpenChange={handleFullscreen}
+            splitView={splitView}
+            setSplitView={setSplitView}
+            syntaxLanguage={syntaxLanguage}
+            setSyntaxLanguage={setSyntaxLanguage}
+            isFullscreen={isFullscreen}
+            oldText={oldText}
+            newText={newText}
             highlightLines={highlightLines}
             onLineNumberClick={onLineNumberClick}
-            renderContent={renderSyntaxHighlightedContent}
-            useDarkTheme
+            renderSyntaxHighlightedContent={renderSyntaxHighlightedContent}
+            languages={LANGUAGES}
           />
-        </CardContent>
+        ) : (
+          <CardContent
+            className={cn(
+              "mx-6 overflow-y-auto rounded-lg px-0 break-all",
+              oldText || newText
+                ? "h-full max-h-[calc(100dvh-10rem)]"
+                : "hidden",
+              isMobile && "hidden",
+            )}
+          >
+            <DiffViewer
+              oldValue={oldText}
+              newValue={newText}
+              splitView={splitView}
+              hideLineNumbers={false}
+              showDiffOnly={false}
+              compareMethod={DiffMethod.WORDS}
+              highlightLines={highlightLines}
+              onLineNumberClick={onLineNumberClick}
+              renderContent={renderSyntaxHighlightedContent}
+              useDarkTheme
+            />
+          </CardContent>
+        )}
       </Card>
     </>
-  )
-}
-
-function CopyButton({ text, label }: { text: string; label: string }) {
-  return (
-    <Hint label={label} side="left" asChild>
-      <Button
-        onClick={() => navigator.clipboard.writeText(text)}
-        size="icon"
-        variant="ghost"
-        className="text-muted-foreground hover:text-primary absolute top-2 right-2 opacity-0 transition-opacity group-hover:opacity-100 focus:text-emerald-500"
-      >
-        <Copy />
-        <span className="sr-only">{label}</span>
-      </Button>
-    </Hint>
   )
 }
