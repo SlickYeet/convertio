@@ -14,24 +14,26 @@ import {
 import { Switch } from "@/components/ui/switch"
 
 interface DiffViewerToolbarProps {
+  isDisabled?: boolean
   splitView: boolean
   syntaxLanguage: string
-  isFullscreen: boolean
+  isPreviewOpen: boolean
   languages: { value: string; label: string }[]
   setSplitView: (v: boolean) => void
   setSyntaxLanguage: (v: string) => void
-  handleFullscreen: () => void
+  handlePreview: () => void
 }
 
 export function DiffViewerToolbar(props: DiffViewerToolbarProps) {
   const {
+    isDisabled,
     splitView,
     syntaxLanguage,
-    isFullscreen,
+    isPreviewOpen,
     languages,
     setSplitView,
     setSyntaxLanguage,
-    handleFullscreen,
+    handlePreview,
   } = props
 
   return (
@@ -62,12 +64,17 @@ export function DiffViewerToolbar(props: DiffViewerToolbarProps) {
           </SelectContent>
         </Select>
         <Hint
-          label={isFullscreen ? "Exit Fullscreen" : "Fullscreen"}
+          label={isPreviewOpen ? "Exit Preview" : "Preview"}
           side="top"
           asChild
         >
-          <Button onClick={handleFullscreen} size="icon" variant="outline">
-            {isFullscreen ? (
+          <Button
+            disabled={isDisabled}
+            onClick={handlePreview}
+            size="icon"
+            variant="outline"
+          >
+            {isPreviewOpen ? (
               <>
                 <Minimize2 className="size-4" />
                 <span className="sr-only">Exit Fullscreen</span>

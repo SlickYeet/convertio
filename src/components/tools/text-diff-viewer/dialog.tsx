@@ -1,17 +1,16 @@
-import React from "react"
 import { DiffMethod } from "react-diff-viewer"
 
 import { DiffViewer } from "@/components/tools/text-diff-viewer/diff-viewer"
 import { DiffViewerToolbar } from "@/components/tools/text-diff-viewer/toolbar"
 import {
-  Drawer,
-  DrawerContent,
-  DrawerDescription,
-  DrawerHeader,
-  DrawerTitle,
-} from "@/components/ui/drawer"
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 
-interface DiffViewerDrawerProps {
+interface DiffViewerDialogProps {
   open: boolean
   splitView: boolean
   syntaxLanguage: string
@@ -30,7 +29,7 @@ interface DiffViewerDrawerProps {
   renderSyntaxHighlightedContent: (str: string) => React.JSX.Element
 }
 
-export function DiffViewerDrawer(props: DiffViewerDrawerProps) {
+export function DiffViewerDialog(props: DiffViewerDialogProps) {
   const {
     open,
     splitView,
@@ -48,15 +47,15 @@ export function DiffViewerDrawer(props: DiffViewerDrawerProps) {
   } = props
 
   return (
-    <Drawer open={open} onOpenChange={onOpenChange}>
-      <DrawerContent className="h-fullsupports-[backdrop-filter]:bg-background/60 bg-background/90 mb-4 backdrop-blur">
-        <div className="mb-2 flex items-center justify-between pr-6 pl-2">
-          <DrawerHeader className="items-start">
-            <DrawerTitle>Difference</DrawerTitle>
-            <DrawerDescription>
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="supports-[backdrop-filter]:bg-background/60 bg-background/90 mb-4 h-[90%] backdrop-blur md:min-w-[90vw] lg:min-w-[80vw]">
+        <div className="mb-2 flex items-start justify-between">
+          <DialogHeader>
+            <DialogTitle>Difference</DialogTitle>
+            <DialogDescription>
               {splitView ? "Side-by-Side View" : "Unified View"}
-            </DrawerDescription>
-          </DrawerHeader>
+            </DialogDescription>
+          </DialogHeader>
           <DiffViewerToolbar
             splitView={splitView}
             setSplitView={setSplitView}
@@ -67,7 +66,7 @@ export function DiffViewerDrawer(props: DiffViewerDrawerProps) {
             languages={languages}
           />
         </div>
-        <div className="mx-6 overflow-y-auto rounded-lg px-0 break-all">
+        <div className="h-full overflow-y-auto rounded-lg break-all">
           <DiffViewer
             oldValue={oldText}
             newValue={newText}
@@ -81,7 +80,7 @@ export function DiffViewerDrawer(props: DiffViewerDrawerProps) {
             useDarkTheme
           />
         </div>
-      </DrawerContent>
-    </Drawer>
+      </DialogContent>
+    </Dialog>
   )
 }

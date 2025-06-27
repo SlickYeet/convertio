@@ -88,7 +88,7 @@ export function AppHeader() {
           <SheetContent
             side="top"
             showDefaultCloseButton={false}
-            className="supports-[backdrop-filter]:bg-background/90 bg-background/90 container min-h-screen px-2.5 pb-2 backdrop-blur md:hidden md:px-4"
+            className="supports-[backdrop-filter]:bg-background/60 bg-background/90 container min-h-screen px-2.5 pb-2 backdrop-blur md:hidden md:px-4"
           >
             <SheetHeader className="px-0">
               <SheetTitle onClick={() => setIsMobileMenuOpen(false)}>

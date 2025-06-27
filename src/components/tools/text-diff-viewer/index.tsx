@@ -2,13 +2,12 @@
 
 import { Diff, Trash2 } from "lucide-react"
 import Prism from "prismjs"
-import { useCallback, useEffect, useRef, useState } from "react"
-import { DiffMethod } from "react-diff-viewer"
+import { useCallback, useEffect, useState } from "react"
 
 import { Hint } from "@/components/hint"
 import { DiffViewerHeader } from "@/components/tools/text-diff-viewer/card-header"
 import { CopyButton } from "@/components/tools/text-diff-viewer/copy-button"
-import { DiffViewer } from "@/components/tools/text-diff-viewer/diff-viewer"
+import { DiffViewerDialog } from "@/components/tools/text-diff-viewer/dialog"
 import { DiffViewerDrawer } from "@/components/tools/text-diff-viewer/drawer"
 import { DiffViewerToolbar } from "@/components/tools/text-diff-viewer/toolbar"
 import { Badge } from "@/components/ui/badge"
@@ -18,7 +17,6 @@ import { Textarea } from "@/components/ui/textarea"
 import { CONFIG } from "@/constants/conversion"
 import { useIsMobile } from "@/hooks/use-mobile"
 import { useIsMounted } from "@/hooks/use-mounted"
-import { cn } from "@/lib/utils"
 import type { CurrentType } from "@/types"
 
 const LANGUAGES = [
@@ -63,7 +61,6 @@ interface TextDiffViewerProps {
 export function TextDiffViewer(props: TextDiffViewerProps) {
   const isMounted = useIsMounted()
   const isMobile = useIsMobile()
-  const containerRef = useRef<HTMLDivElement>(null)
 
   const {
     currentType,
@@ -78,21 +75,32 @@ export function TextDiffViewer(props: TextDiffViewerProps) {
   const [splitView, setSplitView] = useState<boolean>(true)
   const [highlightLines, setHighlightLines] = useState<string[]>([])
   const [syntaxLanguage, setSyntaxLanguage] = useState<string>("javascript")
-  const [isFullscreen, setIsFullscreen] = useState(false)
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false)
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false)
+
+  const isPreviewOpen = isMobile ? isDrawerOpen : isDialogOpen
+  const isDisabled = !oldText || !newText
 
   useEffect(() => {
     setSplitView(isMobile ? false : true)
   }, [isMobile])
 
   useEffect(() => {
-    if (isFullscreen && isMobile) {
-      document.exitFullscreen()
-      setIsDrawerOpen(true)
-    } else if (!isMobile) {
-      setIsDrawerOpen(false)
+    if (!oldText || !newText) return
+
+    if (isMobile) {
+      if (isDialogOpen) {
+        setIsDialogOpen(false)
+        setIsDrawerOpen(true)
+      }
+    } else {
+      if (isDrawerOpen) {
+        setIsDrawerOpen(false)
+        setIsDialogOpen(true)
+      }
     }
-  }, [isFullscreen, isMobile])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isMobile])
 
   const onLineNumberClick = useCallback(
     (id: string, e: React.MouseEvent<HTMLTableCellElement>): void => {
@@ -134,22 +142,15 @@ export function TextDiffViewer(props: TextDiffViewerProps) {
     [syntaxLanguage],
   )
 
-  function handleFullscreen() {
-    if (!isMobile) {
-      if (!isFullscreen) {
-        if (containerRef.current?.requestFullscreen) {
-          containerRef.current.requestFullscreen()
-          setIsFullscreen(true)
-        }
-      } else {
-        if (document.exitFullscreen) {
-          document.exitFullscreen()
-          setIsFullscreen(false)
-        }
-      }
-    } else {
+  function handlePreview() {
+    if (!oldText || !newText) return
+
+    if (isMobile) {
       setIsDrawerOpen((prev) => !prev)
-      setIsFullscreen((prev) => !prev)
+      setIsDialogOpen(false)
+    } else {
+      setIsDialogOpen((prev) => !prev)
+      setIsDrawerOpen(false)
     }
   }
 
@@ -221,31 +222,32 @@ export function TextDiffViewer(props: TextDiffViewerProps) {
           </div>
         </CardContent>
       </Card>
-      <Card ref={containerRef} className="@container rounded-t-none border-t-0">
+      <Card className="@container rounded-t-none border-t-0">
         <div className="flex flex-col justify-between gap-y-4 pr-6 @sm:flex-row @sm:items-center">
           <DiffViewerHeader
             title="Difference"
             description={splitView ? "Side-by-Side View" : "Unified View"}
           />
           <DiffViewerToolbar
+            isDisabled={isDisabled}
             splitView={splitView}
             setSplitView={setSplitView}
             syntaxLanguage={syntaxLanguage}
             setSyntaxLanguage={setSyntaxLanguage}
-            isFullscreen={isFullscreen}
-            handleFullscreen={handleFullscreen}
+            isPreviewOpen={isPreviewOpen}
+            handlePreview={handlePreview}
             languages={LANGUAGES}
           />
         </div>
         {isMobile ? (
           <DiffViewerDrawer
             open={isDrawerOpen}
-            onOpenChange={handleFullscreen}
+            onOpenChange={handlePreview}
             splitView={splitView}
             setSplitView={setSplitView}
             syntaxLanguage={syntaxLanguage}
             setSyntaxLanguage={setSyntaxLanguage}
-            isFullscreen={isFullscreen}
+            isPreviewOpen={isPreviewOpen}
             oldText={oldText}
             newText={newText}
             highlightLines={highlightLines}
@@ -254,28 +256,21 @@ export function TextDiffViewer(props: TextDiffViewerProps) {
             languages={LANGUAGES}
           />
         ) : (
-          <CardContent
-            className={cn(
-              "mx-6 overflow-y-auto rounded-lg px-0 break-all",
-              oldText || newText
-                ? "h-full max-h-[calc(100dvh-10rem)]"
-                : "hidden",
-              isMobile && "hidden",
-            )}
-          >
-            <DiffViewer
-              oldValue={oldText}
-              newValue={newText}
-              splitView={splitView}
-              hideLineNumbers={false}
-              showDiffOnly={false}
-              compareMethod={DiffMethod.WORDS}
-              highlightLines={highlightLines}
-              onLineNumberClick={onLineNumberClick}
-              renderContent={renderSyntaxHighlightedContent}
-              useDarkTheme
-            />
-          </CardContent>
+          <DiffViewerDialog
+            open={isDialogOpen}
+            onOpenChange={handlePreview}
+            splitView={splitView}
+            setSplitView={setSplitView}
+            syntaxLanguage={syntaxLanguage}
+            setSyntaxLanguage={setSyntaxLanguage}
+            isPreviewOpen={isPreviewOpen}
+            oldText={oldText}
+            newText={newText}
+            highlightLines={highlightLines}
+            onLineNumberClick={onLineNumberClick}
+            renderSyntaxHighlightedContent={renderSyntaxHighlightedContent}
+            languages={LANGUAGES}
+          />
         )}
       </Card>
     </>
