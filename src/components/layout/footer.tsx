@@ -1,5 +1,6 @@
 import Link from "next/link"
 
+import { APIStatusBadge } from "@/components/api-status-badge"
 import { Credits } from "@/components/layout/credits"
 import { siteConfig } from "@/config"
 
@@ -20,7 +21,10 @@ export function Footer() {
           . All rights reserved.
         </p>
 
-        <Credits />
+        <div className="flex flex-col items-center gap-4 sm:flex-row">
+          <APIStatusBadge />
+          <Credits />
+        </div>
       </div>
     </footer>
   )

@@ -13,63 +13,23 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { siteConfig } from "@/config"
+import {
+  apiEndpoints,
+  checkAllEndpoints,
+  type EndpointStatus,
+} from "@/lib/api-endpoints"
 import { cn } from "@/lib/utils"
-
-interface EndpointStatus {
-  endpoint: string
-  status: "checking" | "available" | "error"
-  error?: string
-}
 
 export function ApiDebug() {
   const [isHidden, setIsHidden] = useState<boolean>(true)
   const [endpoints, setEndpoints] = useState<EndpointStatus[]>([
-    { endpoint: "/convert/md-to-pdf", status: "checking" },
-    { endpoint: "/convert/html-to-pdf", status: "checking" },
+    ...apiEndpoints,
   ])
-
-  async function checkEndpoint(endpoint: string) {
-    try {
-      const response = await fetch(`/api${endpoint}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ input: "# Test", inputType: "md" }),
-      })
-      if (response.status === 200) {
-        return { status: "available" as const }
-      } else {
-        return { status: "error" as const, error: `HTTP ${response.status}` }
-      }
-    } catch (error) {
-      return {
-        status: "error" as const,
-        error: error instanceof Error ? error.message : "Unknown error",
-      }
-    }
-  }
-
-  async function checkAllEndpoints() {
-    setEndpoints((prev) => prev.map((ep) => ({ ...ep, status: "checking" })))
-
-    for (const endpoint of endpoints) {
-      const result = await checkEndpoint(endpoint.endpoint)
-      setEndpoints((prev) =>
-        prev.map((ep) =>
-          ep.endpoint === endpoint.endpoint
-            ? { ...ep, status: result.status, error: result.error }
-            : ep,
-        ),
-      )
-    }
-  }
 
   useEffect(() => {
     if (!isHidden) {
-      checkAllEndpoints()
+      checkAllEndpoints({ setEndpoints })
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isHidden])
 
   if (siteConfig.isDev) {
@@ -96,7 +56,7 @@ export function ApiDebug() {
           </Button>
         </div>
         <CardContent className={cn("space-y-4", isHidden && "hidden")}>
-          <Button onClick={checkAllEndpoints} size="sm">
+          <Button onClick={() => checkAllEndpoints({ setEndpoints })} size="sm">
             Check Endpoints
           </Button>
 
