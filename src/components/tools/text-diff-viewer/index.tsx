@@ -187,11 +187,11 @@ export function TextDiffViewer(props: TextDiffViewerProps) {
             </Hint>
           )}
         </div>
-        <CardContent className="mt-2 flex flex-col gap-6 md:flex-row">
+        <CardContent className="mt-2 grid min-h-[48vh] grid-cols-1 gap-6 md:grid-cols-2">
           <div className="group relative flex-1">
             <Badge
               variant="secondary"
-              className="border-input absolute top-0 right-3 -translate-y-1/2"
+              className="border-input group-focus-within:border-ring group-focus-within:ring-ring absolute top-0 right-3 -translate-y-1/2 transition-all group-focus-within:ring-[1px]"
             >
               Old Text
             </Badge>
@@ -199,15 +199,15 @@ export function TextDiffViewer(props: TextDiffViewerProps) {
               value={oldText}
               onChange={(e) => setOldText(e.target.value)}
               placeholder="Enter old text here..."
-              rows={15}
-              className="resize-none font-mono"
+              rows={20}
+              className="h-full resize-none font-mono"
             />
             <CopyButton text={oldText} label="Copy Old Text" />
           </div>
           <div className="group relative flex-1">
             <Badge
               variant="secondary"
-              className="border-input absolute top-0 right-3 -translate-y-1/2"
+              className="border-input group-focus-within:border-ring group-focus-within:ring-ring absolute top-0 right-3 -translate-y-1/2 transition-all group-focus-within:ring-[1px]"
             >
               New Text
             </Badge>
@@ -215,8 +215,8 @@ export function TextDiffViewer(props: TextDiffViewerProps) {
               value={newText}
               onChange={(e) => setNewText(e.target.value)}
               placeholder="Enter new text here..."
-              rows={15}
-              className="resize-none font-mono"
+              rows={20}
+              className="h-full resize-none font-mono"
             />
             <CopyButton text={newText} label="Copy New Text" />
           </div>

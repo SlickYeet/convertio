@@ -78,6 +78,15 @@ export function DiffViewerDialog(props: DiffViewerDialogProps) {
             onLineNumberClick={onLineNumberClick}
             renderContent={renderSyntaxHighlightedContent}
             useDarkTheme
+            styles={{
+              contentText: {
+                fontFamily: "var(--font-mono)",
+                paddingRight: "1.5rem",
+              },
+              lineNumber: {
+                fontFamily: "var(--font-mono)",
+              },
+            }}
           />
         </div>
       </DialogContent>

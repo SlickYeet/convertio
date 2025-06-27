@@ -42,7 +42,7 @@ export default function RootLayout({
               <AppHeader />
               <div className="flex min-h-[calc(100vh-4rem-1px)] flex-col justify-between">
                 {siteConfig.isDev && <ApiDebug />}
-                <main>{children}</main>
+                <main className="flex-1">{children}</main>
                 <Footer />
               </div>
             </div>
