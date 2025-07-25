@@ -57,7 +57,7 @@ export function UnitReference() {
             </div>
           </TabsContent>
 
-          <TabsContent value="decimal">
+          <TabsContent value="decimal" className="mt-4">
             <div className="grid gap-2 overflow-clip rounded border">
               <table className="w-full">
                 <thead className="bg-secondary/50">
