@@ -4,7 +4,6 @@ import {
   CalculatorIcon,
   Clipboard,
   ClipboardCheck,
-  Copy,
   RotateCcw,
 } from "lucide-react"
 import { useEffect, useState } from "react"
