@@ -10,7 +10,7 @@ import {
 import { CONFIG, CONFIG_LIST } from "@/constants/conversion"
 import { cn } from "@/lib/utils"
 
-export default function Options() {
+export function Options() {
   return (
     <section className="py-16">
       <div className="mb-12 text-center">

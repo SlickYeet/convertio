@@ -3,7 +3,7 @@ import { BadgeCheck, ThumbsUp, Zap } from "lucide-react"
 import ButtonWithAnimatedArrow from "@/components/button-with-animated-arrow"
 import { Badge } from "@/components/ui/badge"
 
-export default function Hero() {
+export function Hero() {
   return (
     <section className="py-16 md:py-24">
       <div className="@container mx-auto max-w-4xl text-center">

@@ -1,6 +1,6 @@
 import { Download, Shield, Zap } from "lucide-react"
 
-export default function Features() {
+export function Features() {
   return (
     <section className="py-16">
       <div className="mb-12 text-center">

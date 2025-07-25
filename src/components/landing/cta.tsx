@@ -1,7 +1,7 @@
 import ButtonWithAnimatedArrow from "@/components/button-with-animated-arrow"
 import { siteConfig } from "@/config"
 
-export default function CTA() {
+export function CTA() {
   return (
     <section className="py-16">
       <div className="bg-primary flex flex-col items-center rounded-2xl p-8 text-center text-white md:p-12">
