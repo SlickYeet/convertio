@@ -81,7 +81,7 @@ export const CONFIG = {
       inputLabel: "Bytes",
       apiEndpoint: "/api/utils/byte-calculator",
       icon: Calculator,
-      popular: false,
+      popular: true,
       comingSoon: false,
     },
   },
