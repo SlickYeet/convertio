@@ -21,6 +21,7 @@ export const CONFIG = {
       icon: FileText,
       popular: true,
       comingSoon: false,
+      isNew: false,
     },
     "html-to-pdf": {
       label: "HTML to PDF Converter",
@@ -33,6 +34,7 @@ export const CONFIG = {
       icon: Code,
       popular: false,
       comingSoon: false,
+      isNew: false,
     },
     "text-to-pdf": {
       label: "Text to PDF Converter",
@@ -45,6 +47,7 @@ export const CONFIG = {
       icon: File,
       popular: false,
       comingSoon: true,
+      isNew: false,
     },
   },
   tools: {
@@ -59,6 +62,7 @@ export const CONFIG = {
       icon: Diff,
       popular: false,
       comingSoon: false,
+      isNew: false,
     },
     "markdown-editor": {
       label: "Markdown Editor",
@@ -71,6 +75,7 @@ export const CONFIG = {
       icon: Text,
       popular: false,
       comingSoon: true,
+      isNew: false,
     },
   },
   utilities: {
@@ -81,8 +86,9 @@ export const CONFIG = {
       inputLabel: "Bytes",
       apiEndpoint: "/api/utils/byte-calculator",
       icon: Calculator,
-      popular: true,
+      popular: false,
       comingSoon: false,
+      isNew: true,
     },
   },
 } satisfies ConfigList
@@ -116,6 +122,7 @@ export type ConfigItem = {
   icon?: LucideIcon
   popular?: boolean
   comingSoon?: boolean
+  isNew?: boolean
 }
 
 type ConverterConfig = ConfigItem & {

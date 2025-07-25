@@ -37,6 +37,7 @@ export function Options() {
                 icon: Icon,
                 popular,
                 comingSoon,
+                isNew,
               } = item
 
               const category = list.label.toLowerCase() as keyof typeof CONFIG
@@ -71,6 +72,11 @@ export function Options() {
                       className="absolute -top-2 left-4"
                     >
                       Coming Soon
+                    </Badge>
+                  )}
+                  {isNew && (
+                    <Badge className="absolute -top-2 left-4 bg-sky-500/25 text-sky-600 dark:text-sky-400">
+                      New
                     </Badge>
                   )}
 
