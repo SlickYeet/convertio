@@ -1,26 +1,27 @@
 import { PageHeader } from "@/components/layout/page-header"
-import { TextDiffViewer } from "@/components/tools/text-diff-viewer"
+import { ByteCalculator } from "@/components/utilities/byte-calculator"
 import { CONFIG } from "@/constants/conversion"
 import type { CurrentType } from "@/types"
 
-interface ToolsPageProps {
+interface UtilitiesPageProps {
   searchParams: Promise<{
     type?: string
   }>
 }
 
-export default async function ToolsPage({ searchParams }: ToolsPageProps) {
+export default async function UtilitiesPage({
+  searchParams,
+}: UtilitiesPageProps) {
   const { type } = await searchParams
 
   const currentType = type as CurrentType
-  const wrongType = !currentType || !(currentType in CONFIG.tools)
+
+  const wrongType = !currentType || !(currentType in CONFIG.utilities)
 
   return (
     <>
       <PageHeader wrongType={wrongType} />
-      {currentType === "text-diff" && (
-        <TextDiffViewer currentType={currentType} />
-      )}
+      {currentType === "byte-calculator" && <ByteCalculator />}
     </>
   )
 }

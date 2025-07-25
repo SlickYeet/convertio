@@ -1,5 +1,5 @@
 import {
-  Binary,
+  Calculator,
   Code,
   Diff,
   File,
@@ -80,9 +80,9 @@ export const CONFIG = {
       description: "Convert between different byte units (KB, MB, GB, etc.).",
       inputLabel: "Bytes",
       apiEndpoint: "/api/utils/byte-calculator",
-      icon: Binary,
+      icon: Calculator,
       popular: false,
-      comingSoon: true,
+      comingSoon: false,
     },
   },
 } satisfies ConfigList

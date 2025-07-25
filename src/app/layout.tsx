@@ -39,7 +39,7 @@ export default function RootLayout({
           <div className="dark:from-secondary/50 dark:to-secondary/100 min-h-screen bg-gradient-to-br from-neutral-50 to-neutral-100">
             <div className="container px-2.5 md:px-4">
               <AppHeader />
-              <div className="flex min-h-[calc(100vh-4rem-1px)] flex-col justify-between">
+              <div className="flex min-h-[calc(100vh-4rem-1px)] flex-col justify-between pt-2">
                 {/* {siteConfig.isDev && <ApiDebug />} */}
                 <main className="flex-1">{children}</main>
                 <Footer />
