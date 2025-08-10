@@ -5,7 +5,7 @@ export function Credits() {
     <div className="text-muted-foreground flex items-center justify-center text-center text-sm md:mt-0">
       <p className="mr-1.5">Made with ❤️ by</p>
       <a
-        href="https://lasse.famlam.ca"
+        href="https://www.lx2.dev"
         target="_blank"
         rel="noopener noreferrer"
         className="text-sky-600 dark:text-sky-400"
