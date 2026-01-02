@@ -1,16 +1,16 @@
 {
-  "name": "md-to-pdf",
+  "name": "convertio",
   "version": "0.1.0",
   "private": true,
   "type": "module",
   "scripts": {
     "build": "next build",
-    "dev": "next dev --turbopack",
-    "lint": "next lint",
+    "dev": "next dev",
+    "lint": "eslint",
     "start": "next start",
     "format": "prettier --write ./src/*",
-    "clean": "rm -rf .next node_modules pnpm-lock.yaml && pnpm install ",
-    "shadcn": "pnpm dlx shadcn@latest"
+    "clean": "rm -rf .next node_modules pnpm-lock.yaml && pnpm install",
+    "shadcn": "bunx --bun shadcn@latest"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.11",
@@ -66,6 +66,5 @@
   },
   "ctntaMetadata": {
     "initVersion": "0.6.0"
-  },
-  "packageManager": "pnpm@10.12.3"
+  }
 }
