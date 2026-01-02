@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
     const timestamp = new Date().toISOString().replace(/[:.]/g, "-")
     const filename = `converted-${timestamp}.pdf`
 
-    return new NextResponse(pdfBuffer, {
+    return new NextResponse(Buffer.from(pdfBuffer), {
       headers: {
         "Content-Type": "application/pdf",
         "Content-Disposition": `attachment; filename="${filename}"`,

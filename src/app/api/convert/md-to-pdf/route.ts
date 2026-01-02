@@ -41,7 +41,7 @@ export async function POST(req: NextRequest) {
     const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, "-")
     const filename = `markdown-document-${timestamp}.pdf`
 
-    return new NextResponse(pdfBuffer, {
+    return new NextResponse(Buffer.from(pdfBuffer), {
       headers: {
         "Content-Type": "application/pdf",
         "Content-Disposition": `attachment; filename="${filename}"`,
