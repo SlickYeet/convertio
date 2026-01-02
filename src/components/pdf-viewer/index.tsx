@@ -4,8 +4,8 @@ import { Dot, Eye, EyeClosed } from "lucide-react"
 import { useRef, useState } from "react"
 import { Document, Page, pdfjs } from "react-pdf"
 
-import "react-pdf/dist/esm/Page/AnnotationLayer.css"
-import "react-pdf/dist/esm/Page/TextLayer.css"
+import "react-pdf/dist/Page/AnnotationLayer.css"
+import "react-pdf/dist/Page/TextLayer.css"
 
 import ErrorAlert from "@/components/error-alert"
 import { Hint } from "@/components/hint"
